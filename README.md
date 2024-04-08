@@ -1,4 +1,4 @@
-# :checkered_flag: JITE Shop
+# :checkered_flag: GameNest :video_game:
 
 A aplicação consiste em uma loja virtual de jogos eletrônicos em mídia digital. 
 
@@ -56,7 +56,7 @@ A aplicação consiste em uma loja virtual de jogos eletrônicos em mídia digit
 
 | Método HTTP | URL |
 | --- | --- |
-| GET | api/entidade1/|
-| POST | api/entidade2 |
+| GET | ? * |
+| POST | ? |
 
-Ainda serão definidas.
+\* Ainda serão definidas.
