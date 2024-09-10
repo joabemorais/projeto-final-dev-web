@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import type {Game} from '@/types';
+import { useUpload } from '@/composables/useUploads';
+defineProps<Game>();
+
+</script>
+
 <template>
     <div class="col-12 col-md-6 col-xl-3">
         <div class="card" style="width: 18rem;">
