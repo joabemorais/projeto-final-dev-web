@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "carrinhos",
+  "info": {
+    "singularName": "carrinho",
+    "pluralName": "carrinhos",
+    "displayName": "Carrinho"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "jogos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::jogo.jogo"
+    },
+    "precoTotal": {
+      "type": "float"
+    }
+  }
+}
