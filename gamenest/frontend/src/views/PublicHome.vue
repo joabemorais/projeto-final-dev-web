@@ -4,6 +4,5 @@ import NavBar from '@/components/NavBar.vue'
 </script>
 
 <template>
-    <NavBar />
-    <Games />
+  <Games />
 </template>
