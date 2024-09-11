@@ -1,9 +1,10 @@
 export type Game = {
     id: number,
-    title: string,
-    price: number,
-    cover: Cover,
-    description: string
+    Nome: string,
+    Descricao: string,
+    Desenvolvedora: string,
+    Preco: number,
+    Capa: Cover
 }
 
 type Cover = {

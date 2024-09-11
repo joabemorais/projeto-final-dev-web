@@ -32,6 +32,17 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::avaliacao.avaliacao"
+    },
+    "Capa": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }

@@ -877,6 +877,7 @@ export interface ApiJogoJogo extends Schema.CollectionType {
       'oneToMany',
       'api::avaliacao.avaliacao'
     >;
+    Capa: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
