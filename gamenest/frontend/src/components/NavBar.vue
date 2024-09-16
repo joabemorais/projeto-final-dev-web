@@ -1,15 +1,17 @@
 <template>
   <div class="container-fluid px-0">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom px-2">
-      <div class="col-md-3 mb-2 mb-md-0">
-        <!-- <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+      <!-- <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
           <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap">
             <use xlink:href="#bootstrap"></use>
           </svg>
         </a> -->
-        <h3 class="my-auto mx-3 nome">
-          GameNest
-        </h3>
+      <div class="col-md-3 mb-2 mb-md-0">
+        <router-link to="/" class="my-auto mx-3 nome no-link-style">
+          <h3 class="game-nest-text">
+            GameNest
+          </h3>
+        </router-link>
       </div>
 
       <div class="col-md-3 text-end mx-3">
@@ -21,7 +23,22 @@
 </template>
 
 <style scoped>
+  .no-link-style {
+    text-decoration: none;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+
   .nome {
     font-family: 'Tiny5';
+  }
+
+  .game-nest-text {
+    margin: 0;
+    padding: 0;
+    line-height: 1; /* Adjust line-height if needed */
   }
 </style>
