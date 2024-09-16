@@ -1,5 +1,4 @@
 <template>
-
     <div class="caixa-login">
         <div class="container col col-md-6 col-xl-3">
             <h1>GameNest</h1>
