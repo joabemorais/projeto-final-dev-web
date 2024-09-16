@@ -11,15 +11,15 @@
             </div>
 
             <ul class="nav col-md-4 justify-content-end list-unstyled d-flex fs-4">
-                <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
-                            <i class="bi bi-twitter-x"></i>
-                        </svg></a></li>
-                <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
-                            <i class="bi bi-instagram"></i>
-                        </svg></a></li>
-                <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
-                            <i class="bi bi-facebook"></i>
-                        </svg></a></li>
+                <li class="ms-3"><a class="text-body-secondary" href="#">
+                        <i class="bi bi-twitter-x"></i>
+                    </a></li>
+                <li class="ms-3"><a class="text-body-secondary" href="#">
+                        <i class="bi bi-instagram"></i>
+                    </a></li>
+                <li class="ms-3"><a class="text-body-secondary" href="#">
+                        <i class="bi bi-facebook"></i>
+                    </a></li>
             </ul>
         </footer>
     </div>

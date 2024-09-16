@@ -10,7 +10,6 @@ const fetchGames = async () => {
   try {
     const response = await api.get('/jogos?populate=Capa')
     jogos.value = response.data.data
-    console.log(jogos.value)
   } catch (error) {
     console.error(error)
   }
@@ -24,6 +23,6 @@ onMounted(() => {
 <template>
   <h1 class="container text-center my-3 my-xl-5">Jogos em destaque</h1>
   <div class="container row mx-auto g-4">
-    <GameCard v-for="jogo in jogos" :Nome="jogo.Nome" :Preco="jogo.Preco" :Capa="jogo.Capa" />
+    <GameCard v-for="jogo in jogos" :Nome="jogo.Nome" :Preco="jogo.Preco" :Capa="jogo.Capa" :id="jogo.id"/>
   </div>
 </template>
