@@ -900,7 +900,7 @@ export interface ApiUsuarioUsuario extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    NomeDeUsuario: Attribute.String & Attribute.Required;
+    NomeDeUsuario: Attribute.String & Attribute.Required & Attribute.Unique;
     Email: Attribute.Email & Attribute.Required & Attribute.Unique;
     Cargo: Attribute.String & Attribute.Required;
     jogos: Attribute.Relation<
