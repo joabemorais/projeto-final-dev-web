@@ -10,6 +10,12 @@ const props = defineProps<{
 }>()
 
 const precoFormatado = computed(() => props.Preco.toFixed(2))
+
+const emit = defineEmits(['delete'])
+
+function deleteGame() {
+    emit('delete', props.id)
+}
 </script>
 
 <template>
@@ -20,7 +26,7 @@ const precoFormatado = computed(() => props.Preco.toFixed(2))
         <td><span style="font-weight: bold; color: green;">R${{ precoFormatado }}</span></td>
         <td>
             <i class="bi bi-pencil-square edit"></i>
-            <i class="bi bi-trash3 px-1 delete"></i>
+            <i class="bi bi-trash3 px-1 delete" @click="deleteGame"></i>
         </td>
     </tr>
 </template>

@@ -18,7 +18,7 @@ const userStore = useUserStore();
         <button type="button" class="btn btn-primary">Sign-up</button>
       </div>
 
-      <div class="col-md-3 text-end me-3 d-flex justify-content-end align-items-center">
+      <div v-else class="col-md-3 text-end me-3 d-flex justify-content-end align-items-center">
         <span style="font-size: 1.1rem;">{{ userStore.username }}</span>
 
         <!-- Utilizando o ícone de triângulo existente -->
