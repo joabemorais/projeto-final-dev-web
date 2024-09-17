@@ -22,3 +22,10 @@ export type User = {
 type Role = {
   name: string
 }
+
+export interface ApplicationError {
+  error: {
+    name: string
+    message: string
+  }
+}
