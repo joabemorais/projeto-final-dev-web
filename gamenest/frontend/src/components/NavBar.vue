@@ -32,10 +32,10 @@ const userStore = useUserStore();
             <i class="bi bi-caret-down-fill"></i>
           </div>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item" href="#">Perfil <i class="bi bi-person"></i></a></li>
-            <li><a class="dropdown-item" href="#">Biblioteca <i class="bi bi-collection"></i></a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> Perfil</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-collection"></i> Biblioteca</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Logout <i class="bi bi-box-arrow-right"></i></a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
           </ul>
         </div>
       </div>
