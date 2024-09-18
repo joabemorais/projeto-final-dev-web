@@ -21,8 +21,8 @@ function deleteGame() {
 <template>
     <tr>
         <th scope="row">{{ id }}</th>
-        <td><img :src="`${BASE_URL}${Capa.url}`" :alt="`capa do jogo ${Nome}`"/></td>
-        <td>{{ Nome }}</td>
+        <td><router-link :to="`/games/${id}`"><img :src="`${BASE_URL}${Capa.url}`" :alt="`capa do jogo ${Nome}`"/></router-link></td>
+        <td><router-link :to="`/games/${id}`">{{ Nome }}</router-link></td>
         <td><span style="font-weight: bold; color: green;">R${{ precoFormatado }}</span></td>
         <td>
             <i class="bi bi-pencil-square edit"></i>
@@ -44,5 +44,15 @@ img {
 .delete {
     color: #dc3545;
     cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: rgb(69, 108, 238);
+    text-decoration: underline;
 }
 </style>

@@ -13,15 +13,9 @@ const userStore = useUserStore();
         </router-link>
       </div>
 
-      <div v-if="userStore.username==''" class="col-md-3 text-end mx-3">
-        <button type="button" class="btn btn-outline-primary me-2">Login</button>
-        <button type="button" class="btn btn-primary">Sign-up</button>
-      </div>
-
-      <div v-else class="col-md-3 text-end me-3 d-flex justify-content-end align-items-center">
+      <div v-if="userStore.username" class="col-md-3 text-end me-3 d-flex justify-content-end align-items-center">
         <span style="font-size: 1.1rem;">{{ userStore.username }}</span>
 
-        <!-- Utilizando o ícone de triângulo existente -->
         <div class="dropdown ms-1">
           <div
             class="drop-button"
@@ -33,11 +27,22 @@ const userStore = useUserStore();
           </div>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
             <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> Perfil</a></li>
+            <router-link :to="'/cart'">
+              <li><a class="dropdown-item" href="#"><i class="bi bi-cart2"></i> Carrinho</a></li>
+            </router-link>
             <li><a class="dropdown-item" href="#"><i class="bi bi-collection"></i> Biblioteca</a></li>
+            <router-link :to="'/Admin'">
+              <li v-if="userStore.role=='Admin'"><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Admin</a></li>
+            </router-link>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+            <li><a @click="userStore.logout" class="dropdown-item" href="#"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
           </ul>
         </div>
+      </div>
+
+      <div v-else class="col-md-3 text-end mx-3">
+        <router-link :to="`/login`"><button type="button" class="btn btn-outline-primary me-2">Login</button></router-link>
+        <button type="button" class="btn btn-primary">Sign-up</button>
       </div>
     </header>
   </div>
@@ -72,5 +77,9 @@ const userStore = useUserStore();
   min-width: 150px; /* Tamanho customizado */
   max-width: 250px; /* Para não ficar grande demais */
   font-size: 1rem; /* Tamanho do texto */
+}
+
+a {
+  text-decoration: none;
 }
 </style>
