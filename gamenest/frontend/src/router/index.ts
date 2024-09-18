@@ -4,7 +4,7 @@ import { useUserStore } from '@/stores/userStore'
 import PublicHome from '@/pages/PublicHome.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import GamePage from '@/pages/GameInDetails.vue'
-import Cart from '@/components/Cart.vue'
+import Cart from '@/pages/Cart.vue'
 import GamesAdmin from '@/pages/Admin/GamesAdmin.vue'
 
 const router = createRouter({
