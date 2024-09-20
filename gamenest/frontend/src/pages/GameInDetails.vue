@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { api, BASE_URL } from '@/api';
 import { useRoute } from 'vue-router';
 import type { Game } from '@/types';
@@ -7,12 +7,13 @@ import type { Game } from '@/types';
 const route = useRoute()
 
 const jogo = ref({} as Game)
-
+let precoFormatado = ref('')
 
 const fetchGame = async () => {
   try {
     const response = await api.get(`/jogos/${route.params.id}?populate=Capa`)
     jogo.value = response.data.data
+    precoFormatado = computed(() => jogo.value.Preco.toFixed(2))
   } catch (error) {
     console.error(error)
   }
@@ -36,7 +37,7 @@ onMounted(() => {
                         <hr>
                         <p class="card-text">{{ jogo.Descricao }}</p>
                         <p class="card-text">Desenvolvedor: {{ jogo.Desenvolvedora }}</p>
-                        <p class="card-text">Preço: <span style="color: green; font-weight: bold;">R${{ jogo.Preco }}</span></p>
+                        <p class="card-text">Preço: <span style="color: green; font-weight: bold;">R${{ precoFormatado }}</span></p>
                         <a href="#" class="btn btn-primary">Adicionar ao carrinho <i class="bi bi-cart-fill"></i></a>
                     </div>
                 </div>
