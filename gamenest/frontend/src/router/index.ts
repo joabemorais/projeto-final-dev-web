@@ -4,8 +4,9 @@ import { useUserStore } from '@/stores/userStore'
 import PublicHome from '@/pages/PublicHome.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import GamePage from '@/pages/GameInDetails.vue'
-import Cart from '@/components/Cart.vue'
+import Cart from '@/pages/Cart.vue'
 import GamesAdmin from '@/pages/Admin/GamesAdmin.vue'
+import RegisterPage from '@/pages/RegisterPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +20,11 @@ const router = createRouter({
       path: '/login',
       name: 'loginPage',
       component: LoginPage
+    },
+    {
+      path: '/register',
+      name: 'registerPage',
+      component: RegisterPage
     },
     {
       path: '/admin',
@@ -48,7 +54,6 @@ export default router
 
 router.beforeEach((to, from) => {
   const userStore = useUserStore()
-  console.log(userStore.isAuthenticated)
   if(to.meta.requiresAuth && !userStore.isAuthenticated) {
     return '/login'
   }

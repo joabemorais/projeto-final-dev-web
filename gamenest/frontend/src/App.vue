@@ -8,7 +8,7 @@ const route = useRoute();
 
 <template>
   <div>
-    <NavBar v-if="route.name !== 'loginPage'" />
+    <NavBar v-if="route.name !== 'loginPage' && route.name !== 'registerPage'" />
     <!-- <NavBar/> -->
     <RouterView />
     <Footer />

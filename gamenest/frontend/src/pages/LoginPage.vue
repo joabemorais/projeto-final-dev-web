@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router';
 import { api } from '@/api'
 import { useUserStore } from '@/stores/userStore'
 import { isAxiosError } from 'axios'
@@ -12,8 +13,11 @@ const password = ref('')
 const loading = ref(false)
 const exception = ref<ApplicationError>()
 const router = useRouter()
+const route = useRoute();
 
 const userStore = useUserStore()
+
+let message = route.query.message || '';
 
 async function authenticate() {
   try {
@@ -46,6 +50,7 @@ async function authenticate() {
   } catch (e) {
     if (isAxiosError(e) && isApplicationError(e.response?.data)) {
       exception.value = e.response?.data
+      message = ''
     }
   } finally {
     loading.value = false
@@ -62,6 +67,14 @@ async function authenticate() {
       <h1 class="mb-4">GameNest</h1>
       <form @submit.prevent="authenticate" class="border p-3 rounded my-3">
         <h4>Entrar</h4>
+        <div v-if="message">
+        <div class="alert alert-success" role="alert">
+          {{ message }}
+        </div>
+      </div>
+        <div v-if="exception" class="alert alert-danger" role="alert">
+          {{ exception.error.message }}
+        </div>
         <div class="mb-3 mt-4">
           <label for="exampleInputEmail1" class="form-label">Email</label>
           <input

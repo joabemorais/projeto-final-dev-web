@@ -42,7 +42,7 @@ const userStore = useUserStore();
 
       <div v-else class="col-md-3 text-end mx-3">
         <router-link :to="`/login`"><button type="button" class="btn btn-outline-primary me-2">Login</button></router-link>
-        <button type="button" class="btn btn-primary">Sign-up</button>
+        <router-link :to="'/register'"><button type="button" class="btn btn-primary">Sign-up</button></router-link>
       </div>
     </header>
   </div>

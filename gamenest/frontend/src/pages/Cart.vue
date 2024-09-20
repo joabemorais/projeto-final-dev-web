@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 import { onMounted } from 'vue';
 import { api } from '@/api';
-import CartItem from './CartItem.vue';
+import CartItem from '@/components/CartItem.vue';
 import type { Game } from '@/types'
 
 const jogos = ref([] as Game[])
