@@ -61,8 +61,15 @@ async function deleteGame(id: number) {
 </script>
 
 <template>
-  <h2 class="my-5 text-center">Lista de Jogos:</h2>
-  <div class="tabela">
+  <div class="flex mb-4 px-5 py-2 w-full">
+    <h2 class="text-lg font-semibold">Games List</h2>
+
+    <RouterLink to="/games/create" class="btn btn-primary align-items-end">
+      Criar Jogo <i class="bi bi-file-plus-fill"></i>
+    </RouterLink>
+  </div>
+
+  <div class="tabela flex">
     <table class="table table-striped">
       <thead>
         <tr>

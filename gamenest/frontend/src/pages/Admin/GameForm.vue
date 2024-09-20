@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { isAxiosError } from 'axios'
 import { api } from '@/api'
 import { useUpload } from '@/composables/useUpload'
@@ -8,12 +8,12 @@ import type { ApplicationError, Game } from '@/types'
 import { isApplicationError } from '@/composables/useApplicationError'
 import { RouterLink, useRoute } from 'vue-router'
 
-const id = ref(0)
+const id = ref<number | null>(null)
 const nome = ref('')
 const capa = ref<File>()
 const capaURL = ref('')
 const descricao = ref('')
-const desenvovedora = ref('')
+const desenvolvedora = ref('')
 const preco = ref<number>()
 
 const userStore = useUserStore()
@@ -24,19 +24,27 @@ const error = ref<ApplicationError>()
 
 const route = useRoute()
 
+onMounted(() => {
+  id.value = route.params.id ? Number(route.params.id) : null
+  console.log('ID:', id.value) // Debugging statement to check the value of id
+  if (id.value) {
+    getGame()
+  }
+})
+
 async function getGame() {
   try {
+    loading.value = true
     const { data } = await api.get(`/games/${route.params.id}`, {
       params: {
         populate: 'cover'
       }
     })
     const game = data.data as Game
-    id.value = Number(route.params.id)
     nome.value = game.Nome
     preco.value = game.Preco
     descricao.value = game.Descricao
-    desenvovedora.value = game.Desenvolvedora
+    desenvolvedora.value = game.Desenvolvedora
     capaURL.value = game.Capa.url
   } catch (e) {
     if (isAxiosError(e) && isApplicationError(e.response?.data)) {
@@ -64,7 +72,7 @@ async function createGame() {
         Nome: nome.value,
         Preco: preco.value,
         Descricao: descricao.value,
-        Desenvovedora: desenvovedora.value
+        Desenvolvedora: desenvolvedora.value
       })
     )
 
@@ -99,7 +107,7 @@ async function updateGame() {
           Nome: nome.value,
           Preco: preco.value,
           Descricao: descricao.value,
-          Desenvovedora: desenvovedora.value
+          Desenvolvedora: desenvolvedora.value
         })
       )
 
@@ -119,7 +127,7 @@ async function updateGame() {
             Nome: nome.value,
             Preco: preco.value,
             Descricao: descricao.value,
-            Desenvovedora: desenvovedora.value
+            Desenvolvedora: desenvolvedora.value
           }
         },
         {
@@ -140,10 +148,6 @@ async function updateGame() {
     loading.value = false
   }
 }
-
-if (route.params.id) {
-  getGame()
-}
 </script>
 
 <template>
@@ -162,7 +166,7 @@ if (route.params.id) {
     {{ feedback }}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
-  <form @submit.prevent="handleUpload">
+  <form @submit.prevent="id ? updateGame() : createGame()">
     <img class="col-auto" v-if="capaURL" :src="useUpload()(capaURL)" />
     <div class="row text-start">
       <div class="col-12 mb-3">
@@ -176,41 +180,41 @@ if (route.params.id) {
         />
       </div>
       <div class="col-12 mb-3">
-        <label for="titleInput" class="form-label">Game name</label>
+        <label for="nameInput" class="form-label">Game name</label>
         <input
           v-model="nome"
           type="text"
-          id="titleInput"
+          id="nameInput"
           class="form-control"
           placeholder="an awesome title"
         />
       </div>
       <div class="col-3 mb-3">
-        <label for="numberInput" class="form-label">Game price</label>
+        <label for="priceInput" class="form-label">Game price</label>
         <input
           v-model="preco"
           type="number"
-          id="numberInput"
+          id="priceInput"
           class="form-control"
           placeholder="00.00"
         />
       </div>
       <div class="col-2 mb-3">
-        <label for="priceInput" class="form-label">Game description</label>
+        <label for="descriptionInput" class="form-label">Game description</label>
         <input
           v-model="descricao"
           type="text"
-          id="priceInput"
+          id="descriptionInput"
           class="form-control"
           placeholder="descrição"
         />
       </div>
       <div class="col-2 mb-3">
-        <label for="priceInput" class="form-label">Game developer</label>
+        <label for="developerInput" class="form-label">Game developer</label>
         <input
-          v-model="desenvovedora"
+          v-model="desenvolvedora"
           type="text"
-          id="priceInput"
+          id="developerInput"
           class="form-control"
           placeholder="desenvolvedora"
         />
