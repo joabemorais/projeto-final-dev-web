@@ -14,45 +14,54 @@ const precoFormatado = computed(() => props.Preco.toFixed(2))
 const emit = defineEmits(['delete'])
 
 function deleteGame() {
-    emit('delete', props.id)
+  emit('delete', props.id)
 }
 </script>
 
 <template>
-    <tr>
-        <th scope="row">{{ id }}</th>
-        <td><router-link :to="`/games/${id}`"><img :src="`${BASE_URL}${Capa.url}`" :alt="`capa do jogo ${Nome}`"/></router-link></td>
-        <td><router-link :to="`/games/${id}`">{{ Nome }}</router-link></td>
-        <td><span style="font-weight: bold; color: green;">R${{ precoFormatado }}</span></td>
-        <td>
-            <i class="bi bi-pencil-square edit"></i>
-            <i class="bi bi-trash3 px-1 delete" @click="deleteGame"></i>
-        </td>
-    </tr>
+  <tr>
+    <th scope="row">{{ id }}</th>
+    <td>
+      <router-link :to="`/games/${id}`"
+        ><img :src="`${BASE_URL}${Capa.url}`" :alt="`capa do jogo ${Nome}`"
+      /></router-link>
+    </td>
+    <td>
+      <router-link :to="`/games/${id}`">{{ Nome }}</router-link>
+    </td>
+    <td>
+      <span style="font-weight: bold; color: green">R${{ precoFormatado }}</span>
+    </td>
+    <td>
+      <router-link :to="`/games/edit/${id}`">
+        <i class="bi bi-pencil-square edit"></i>
+      </router-link>
+      <i class="bi bi-trash3 px-1 delete" @click="deleteGame"></i>
+    </td>
+  </tr>
 </template>
 
 <style scoped>
-
 img {
-    width: 50px;
-    border-radius: 5px;
+  width: 50px;
+  border-radius: 5px;
 }
 .edit {
-    color: #007bff;
-    cursor: pointer;
+  color: #007bff;
+  cursor: pointer;
 }
 .delete {
-    color: #dc3545;
-    cursor: pointer;
+  color: #dc3545;
+  cursor: pointer;
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 a:hover {
-    color: rgb(69, 108, 238);
-    text-decoration: underline;
+  color: rgb(69, 108, 238);
+  text-decoration: underline;
 }
 </style>
