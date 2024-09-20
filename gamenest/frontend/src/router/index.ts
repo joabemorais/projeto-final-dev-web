@@ -6,11 +6,8 @@ import LoginPage from '@/pages/LoginPage.vue'
 import GamePage from '@/pages/GameInDetails.vue'
 import Cart from '@/pages/Cart.vue'
 import GamesAdmin from '@/pages/Admin/GamesAdmin.vue'
-<<<<<<< HEAD
 import GameForm from '@/pages/Admin/GameForm.vue'
-=======
 import RegisterPage from '@/pages/RegisterPage.vue'
->>>>>>> 9395747e58c0a6f8ac2a6e365d96d7ad1b638cda
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
