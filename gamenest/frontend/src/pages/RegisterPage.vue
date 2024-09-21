@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { api } from '@/api';
+import { api } from '@/api'
 import { isAxiosError } from 'axios'
 import type { ApplicationError } from '@/types'
-import { isApplicationError } from '@/composables/useApplicationError';
+import { isApplicationError } from '@/composables/useApplicationError'
 import { useRouter } from 'vue-router'
 
 const username = ref('')
@@ -36,13 +36,12 @@ async function register() {
       }
     }
 
-    const {data} = await api.post('/auth/local/register', newUser)
+    const { data } = await api.post('/auth/local/register', newUser)
     console.log(data)
 
     feedback.value = 'Registrado com sucesso!'
 
-    router.push({path: '/login', query: {message: feedback.value}})
-
+    router.push({ path: '/login', query: { message: feedback.value } })
   } catch (e) {
     if (isAxiosError(e) && isApplicationError(e.response?.data)) {
       error.value = e.response?.data
@@ -50,7 +49,6 @@ async function register() {
     }
   }
 }
-
 </script>
 
 <template>
@@ -60,10 +58,19 @@ async function register() {
     <div class="container col col-md-6 col-xl-3">
       <h1 class="mb-4">GameNest</h1>
       <form class="border p-3 rounded my-3" @submit.prevent="register">
-        <div v-if="feedback" class="col-12 alert alert-dismissible fade show"
-          :class="{ 'alert-danger': error, 'alert-success': !error }" role="alert">
+        <div
+          v-if="feedback"
+          class="col-12 alert alert-dismissible fade show"
+          :class="{ 'alert-danger': error, 'alert-success': !error }"
+          role="alert"
+        >
           {{ feedback }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
         </div>
         <h4>Criar Conta</h4>
         <div class="mb-3 mt-4">
@@ -72,8 +79,15 @@ async function register() {
         </div>
         <div class="mb-3 mt-4">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" v-model="email" aria-describedby="emailHelp"
-            placeholder="exemplo@mail.com" required />
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            v-model="email"
+            aria-describedby="emailHelp"
+            placeholder="exemplo@mail.com"
+            required
+          />
         </div>
         <div class="mb-3">
           <label for="senha" class="form-label">Senha</label>
@@ -87,19 +101,19 @@ async function register() {
 </template>
 
 <style scoped>
-  .fill {
-    height: 71px;
-  }
+.fill {
+  height: 71px;
+}
 
-  .caixa-login {
-    height: 70vh;
-    display: flex;
-    align-items: center;
-  }
+.caixa-login {
+  height: 70vh;
+  display: flex;
+  align-items: center;
+}
 
-  h1 {
-    font-family: 'Tiny5';
-    text-align: center;
-    font-size: xxx-large;
-  }
+h1 {
+  font-family: 'Tiny5';
+  text-align: center;
+  font-size: xxx-large;
+}
 </style>
