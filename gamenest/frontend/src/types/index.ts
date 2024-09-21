@@ -17,6 +17,11 @@ export type User = {
   username: string
   email: string
   role: Role
+  carrinho: Carrinho
+}
+
+type Carrinho = {
+  id: number
 }
 
 type Role = {

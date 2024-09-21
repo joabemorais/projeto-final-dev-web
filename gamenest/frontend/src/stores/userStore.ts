@@ -9,6 +9,9 @@ export const useUserStore = defineStore('user', () => {
     email: localStorage.getItem('email') || '',
     role: {
       name: localStorage.getItem('role') || ''
+    },
+    carrinho: {
+      id: Number(localStorage.getItem('carrinho'))
     }
   })
 
@@ -26,6 +29,7 @@ export const useUserStore = defineStore('user', () => {
     localStorage.setItem('id', authUser.id.toString())
     localStorage.setItem('email', authUser.email)
     localStorage.setItem('role', authUser.role.name)
+    localStorage.setItem('carrinho', authUser.carrinho.id.toString())
   }
 
   function logout() {

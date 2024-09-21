@@ -38,7 +38,7 @@ onMounted(() => {
                         <p class="card-text">{{ jogo.Descricao }}</p>
                         <p class="card-text">Desenvolvedor: {{ jogo.Desenvolvedora }}</p>
                         <p class="card-text">Preço: <span style="color: green; font-weight: bold;">R${{ precoFormatado }}</span></p>
-                        <a href="#" class="btn btn-primary">Adicionar ao carrinho <i class="bi bi-cart-fill"></i></a>
+                        <button href="#" class="btn btn-primary">Adicionar ao carrinho <i class="bi bi-cart-fill"></i></button>
                     </div>
                 </div>
             </div>
