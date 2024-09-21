@@ -64,7 +64,7 @@ function remove(id: number) {
     </div>
     <h2 class="my-5 text-center">Carrinho de Compras</h2>
     <div class="geral">
-        <div class="cart">
+        <div v-if="jogos.length" class="cart">
             <CartItem v-for="jogo in jogos" :Nome="jogo.Nome" :Preco="jogo.Preco" :Capa="jogo.Capa" :id="jogo.id" @remove="remove"/>
         </div>
         <div class="cart-review">
