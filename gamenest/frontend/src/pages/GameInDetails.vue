@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from 'vue'
 import { api, BASE_URL } from '@/api';
+import type { ApplicationError } from '@/types'
+import { isAxiosError } from 'axios'
+import { isApplicationError } from '@/composables/useApplicationError';
 import { useRoute } from 'vue-router';
+import { useUserStore } from '@/stores/userStore';
 import type { Game } from '@/types';
+
+const userStore = useUserStore()
+
+const error = ref<ApplicationError>()
+const feedback = ref('')
 
 const route = useRoute()
 
@@ -16,6 +25,28 @@ const fetchGame = async () => {
     precoFormatado = computed(() => jogo.value.Preco.toFixed(2))
   } catch (error) {
     console.error(error)
+  }
+}
+
+async function addToCart() {
+  try {
+    const carrinho = userStore.user.carrinho.jogos
+    carrinho.push(jogo.value)
+
+    await api.put(`/carrinhos/${userStore.user.carrinho.id}`, 
+    {
+      data: {jogos: carrinho}
+    }, {
+      headers: {
+        Authorization: `Bearer ${userStore.jwt}`
+      }
+    })
+  }
+  catch (e) {
+    if (isAxiosError(e) && isApplicationError(e.response?.data)) {
+      error.value = e.response?.data
+      feedback.value = error.value.error.message
+    }
   }
 }
 
@@ -38,7 +69,8 @@ onMounted(() => {
                         <p class="card-text">{{ jogo.Descricao }}</p>
                         <p class="card-text">Desenvolvedor: {{ jogo.Desenvolvedora }}</p>
                         <p class="card-text">Preço: <span style="color: green; font-weight: bold;">R${{ precoFormatado }}</span></p>
-                        <button href="#" class="btn btn-primary">Adicionar ao carrinho <i class="bi bi-cart-fill"></i></button>
+                        <button v-if="userStore.user.carrinho.jogos.includes(jogo)" href="#" class="btn btn-success">Adicionado ao carrinho! <i class="bi bi-cart-fill"></i></button>
+                        <button v-else @click="addToCart" href="#" class="btn btn-primary">Adicionar ao carrinho <i class="bi bi-cart-fill"></i></button>
                     </div>
                 </div>
             </div>
