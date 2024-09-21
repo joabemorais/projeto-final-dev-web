@@ -41,7 +41,7 @@ const userStore = useUserStore()
             <li>
               <a class="dropdown-item" href="#"><i class="bi bi-collection"></i> Biblioteca</a>
             </li>
-            <router-link :to="'/Admin'">
+            <router-link :to="'/admin'">
               <li v-if="userStore.role == 'Admin'">
                 <a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Admin</a>
               </li>
