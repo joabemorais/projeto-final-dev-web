@@ -23,7 +23,7 @@ function deleteGame() {
     <th scope="row">{{ id }}</th>
     <td>
       <router-link :to="`/games/${id}`"
-        ><img :src="`${BASE_URL}${Capa.url}`" :alt="`capa do jogo ${Nome}`"
+        ><img v-if="Capa && Capa.url" :src="`${BASE_URL}${Capa.url}`" :alt="`capa do jogo ${Nome}`"
       /></router-link>
     </td>
     <td>
@@ -34,9 +34,9 @@ function deleteGame() {
     </td>
     <td>
       <router-link :to="`/games/edit/${id}`">
-        <i class="bi bi-pencil-square edit"></i>
+        <i class="bi bi-pencil-square edit fs-5"></i>
       </router-link>
-      <i class="bi bi-trash3 px-1 delete" @click="deleteGame"></i>
+      <i class="bi bi-trash3 px-1 delete fs-5" @click="deleteGame"></i>
     </td>
   </tr>
 </template>
