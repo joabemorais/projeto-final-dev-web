@@ -169,63 +169,80 @@ async function updateGame() {
     {{ feedback }}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
-  <form @submit.prevent="id ? updateGame() : createGame()">
-    <img class="col-auto" v-if="capaURL" :src="useUpload()(capaURL)" />
-    <div class="row text-start">
-      <div class="col-12 mb-3">
-        <label for="coverInput" class="form-label">Game cover</label>
-        <input
-          @change="handleUpload"
-          type="file"
-          id="coverInput"
-          accept="image/*"
-          class="form-control"
-        />
+
+  <div class="d-flex justify-content-center">
+    <form @submit.prevent="id ? updateGame() : createGame()" class="w-75">
+      <img class="col-auto" v-if="capaURL" :src="useUpload()(capaURL)" />
+      <div class="d-flex flex-column justify-content-center">
+        <div class="col-12 col-lg-6 mb-3">
+          <label for="coverInput" class="form-label">Capa</label>
+          <input
+            @change="handleUpload"
+            type="file"
+            id="coverInput"
+            accept="image/*"
+            class="form-control"
+          />
+        </div>
+
+        <div class="col-12 col-lg-6 mb-3">
+          <label for="nameInput" class="form-label">Nome</label>
+          <input
+            v-model="nome"
+            type="text"
+            id="nameInput"
+            class="form-control"
+            placeholder="an awesome title"
+          />
+        </div>
+
+        <div class="col-12 col-lg-6 mb-3">
+          <label for="priceInput" class="form-label">Preço</label>
+          <input
+            v-model="preco"
+            type="number"
+            id="priceInput"
+            class="form-control"
+            placeholder="00.00"
+            step="0.01"
+          />
+        </div>
+
+        <div class="col-12 col-lg-6 mb-3">
+          <label for="developerInput" class="form-label">Desenvolvedora</label>
+          <input
+            v-model="desenvolvedora"
+            type="text"
+            id="developerInput"
+            class="form-control"
+            placeholder="desenvolvedora"
+          />
+        </div>
+
+        <div class="col-12 col-lg-6 mb-3">
+          <label for="descriptionInput" class="form-label">Descrição</label>
+          <textarea
+            v-model="descricao"
+            id="descriptionInput"
+            class="form-control"
+            placeholder="descrição"
+            style="height: 200px; padding-top: 10px; padding-bottom: 10px"
+          ></textarea>
+        </div>
       </div>
-      <div class="col-12 mb-3">
-        <label for="nameInput" class="form-label">Game name</label>
-        <input
-          v-model="nome"
-          type="text"
-          id="nameInput"
-          class="form-control"
-          placeholder="an awesome title"
-        />
+      <div class="mt-3">
+        <RouterLink to="/admin" class="btn btn-danger me-2">
+          Cancelar<i class="ms-1 bi bi-x-lg"></i>
+        </RouterLink>
+
+        <button v-if="id" type="submit" class="btn btn-primary">
+          Editar<i class="ms-1 bi bi-pencil-square"></i>
+        </button>
+
+        <button v-else type="submit" class="btn btn-success">
+          Criar<i class="ms-1 bi bi-plus-circle"></i>
+        </button>
       </div>
-      <div class="col-3 mb-3">
-        <label for="priceInput" class="form-label">Game price</label>
-        <input
-          v-model="preco"
-          type="number"
-          id="priceInput"
-          class="form-control"
-          placeholder="00.00"
-          step="0.01"
-        />
-      </div>
-      <div class="col-2 mb-3">
-        <label for="descriptionInput" class="form-label">Game description</label>
-        <input
-          v-model="descricao"
-          type="text"
-          id="descriptionInput"
-          class="form-control"
-          placeholder="descrição"
-        />
-      </div>
-      <div class="col-2 mb-3">
-        <label for="developerInput" class="form-label">Game developer</label>
-        <input
-          v-model="desenvolvedora"
-          type="text"
-          id="developerInput"
-          class="form-control"
-          placeholder="desenvolvedora"
-        />
-      </div>
-    </div>
-    <RouterLink to="/admin" class="btn btn-danger">Cancel</RouterLink>
-    <input v-if="id" type="submit" class="btn btn-primary" value="Edit" />
-    <input v-else type="submit" class="btn btn-success" value="Create" />
-  </form>
+    </form>
+  </div>
 </template>
