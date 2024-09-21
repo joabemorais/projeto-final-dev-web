@@ -70,16 +70,17 @@
       "relation": "oneToMany",
       "target": "api::jogo.jogo"
     },
-    "avaliacoes": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::avaliacao.avaliacao"
-    },
     "carrinho": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::carrinho.carrinho",
       "mappedBy": "users_permissions_user"
+    },
+    "avaliacoes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::avaliacao.avaliacao",
+      "mappedBy": "usuario"
     }
   }
 }

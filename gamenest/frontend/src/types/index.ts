@@ -23,6 +23,12 @@ type Role = {
   name: string
 }
 
+export type Avaliacao = {
+  id: number
+  Corpo: string
+  Feedback: boolean
+}
+
 export interface ApplicationError {
   error: {
     name: string

@@ -374,9 +374,18 @@ export interface ApiAvaliacaoAvaliacao extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    Titulo: Attribute.String & Attribute.Required;
     Corpo: Attribute.String;
     Feedback: Attribute.Boolean & Attribute.Required;
+    usuario: Attribute.Relation<
+      'api::avaliacao.avaliacao',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    jogo: Attribute.Relation<
+      'api::avaliacao.avaliacao',
+      'manyToOne',
+      'api::jogo.jogo'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -451,13 +460,13 @@ export interface ApiJogoJogo extends Schema.CollectionType {
     Descricao: Attribute.String;
     Preco: Attribute.Float & Attribute.Required;
     Desenvolvedora: Attribute.String & Attribute.Required;
+    Capa: Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Attribute.Required;
     avaliacoes: Attribute.Relation<
       'api::jogo.jogo',
       'oneToMany',
       'api::avaliacao.avaliacao'
     >;
-    Capa: Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
-      Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -881,15 +890,15 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::jogo.jogo'
     >;
-    avaliacoes: Attribute.Relation<
-      'plugin::users-permissions.user',
-      'oneToMany',
-      'api::avaliacao.avaliacao'
-    >;
     carrinho: Attribute.Relation<
       'plugin::users-permissions.user',
       'oneToOne',
       'api::carrinho.carrinho'
+    >;
+    avaliacoes: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::avaliacao.avaliacao'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
