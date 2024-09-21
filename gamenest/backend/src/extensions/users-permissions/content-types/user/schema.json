@@ -78,7 +78,8 @@
     "carrinho": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::carrinho.carrinho"
+      "target": "api::carrinho.carrinho",
+      "mappedBy": "users_permissions_user"
     }
   }
 }

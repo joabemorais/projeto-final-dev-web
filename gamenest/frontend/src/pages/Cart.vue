@@ -1,10 +1,19 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { api } from '@/api';
+import { useUserStore } from '@/stores/userStore';
+import type { ApplicationError } from '@/types'
+import { isAxiosError } from 'axios'
+import { isApplicationError } from '@/composables/useApplicationError';
 import CartItem from '@/components/CartItem.vue';
 import type { Game } from '@/types'
 
+const userStore = useUserStore();
+
+const error = ref<ApplicationError>()
+const feedback = ref('')
+
+const cartId = ref(0)
 const jogos = ref([] as Game[])
 
 const precoFinal = ref(0)
@@ -12,15 +21,37 @@ const precoFormatado = computed(() => precoFinal.value.toFixed(2))
 
 const fetchGames = async () => {
   try {
-    const response = await api.get('/jogos?populate=Capa')
-    jogos.value = response.data.data
+    const {data} = await api.get('/users/me', {
+        headers: {
+            Authorization: `Bearer ${userStore.jwt}`
+        },
+        params: {
+            populate: {
+                carrinho: {
+                    populate: {
+                        jogos: {
+                            populate: 'Capa'
+                        }
+                    }
+                }
+            }
+        }
+    })
+
+    cartId.value = data.carrinho.id
+    jogos.value = data.carrinho.jogos
+
     precoFinal.value = total()
-  } catch (error) {
-    console.error(error)
-  }
+    
+    } catch (e) {
+        if (isAxiosError(e) && isApplicationError(e.response?.data)) {
+            error.value = e.response?.data
+            feedback.value = error.value.error.message
+        }
+    }
 }
 onMounted(() => {
-  fetchGames()
+    fetchGames()
 })
 
 function total() {
@@ -32,12 +63,40 @@ function total() {
 }
 
 function remove(id: number) {
-    jogos.value = jogos.value.filter(jogo => jogo.id !== id)
-    precoFinal.value = total()
+    try {
+        jogos.value = jogos.value.filter(jogo => jogo.id !== id)
+
+        const newCart = {
+            data: {
+                jogos: jogos.value
+            }
+        }
+
+        api.put(`/carrinhos/${cartId.value}`, newCart, {
+            headers: {
+                Authorization: `Bearer ${userStore.jwt}`
+            }
+        })
+
+        precoFinal.value = total()
+        
+    } catch (e) {
+        if (isAxiosError(e) && isApplicationError(e.response?.data)) {
+            error.value = e.response?.data
+            feedback.value = error.value.error.message
+        }
+    }
 }
 </script>
 
 <template>
+    <div v-if="feedback" class="d-flex justify-content-center">
+        <div class="col-4 alert alert-dismissible fade show"
+              :class="{ 'alert-danger': error, 'alert-success': !error }" role="alert">
+              {{ feedback }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
     <h2 class="my-5 text-center">Carrinho de Compras</h2>
     <div class="geral">
         <div class="cart">

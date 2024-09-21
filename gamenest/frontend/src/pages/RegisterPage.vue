@@ -16,21 +16,32 @@ const feedback = ref('')
 
 async function register() {
   try {
+    const newCart = {
+      data: {
+        jogos: []
+      }
+    }
+
+    const dataCart = await api.post('/carrinhos', newCart)
+
     const newUser = {
       username: username.value,
       email: email.value,
       password: password.value,
       role: {
         id: 1
+      },
+      carrinho: {
+        id: dataCart.data.data.id
       }
     }
 
     const {data} = await api.post('/auth/local/register', newUser)
-
     console.log(data)
-    feedback.value = 'Usuário registrado!'
 
-    router.push({path: '/login', query: {message: 'Registrado com sucesso!'}})
+    feedback.value = 'Registrado com sucesso!'
+
+    router.push({path: '/login', query: {message: feedback.value}})
 
   } catch (e) {
     if (isAxiosError(e) && isApplicationError(e.response?.data)) {

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "carrinho",
     "pluralName": "carrinhos",
-    "displayName": "Carrinho"
+    "displayName": "Carrinho",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -16,8 +17,11 @@
       "relation": "oneToMany",
       "target": "api::jogo.jogo"
     },
-    "precoTotal": {
-      "type": "float"
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "carrinho"
     }
   }
 }
