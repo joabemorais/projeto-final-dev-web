@@ -6,6 +6,7 @@ import LoginPage from '@/pages/LoginPage.vue'
 import GamePage from '@/pages/GameInDetails.vue'
 import Cart from '@/pages/Cart.vue'
 import GamesAdmin from '@/pages/Admin/GamesAdmin.vue'
+import GameForm from '@/pages/Admin/GameForm.vue'
 import RegisterPage from '@/pages/RegisterPage.vue'
 
 const router = createRouter({
@@ -21,6 +22,7 @@ const router = createRouter({
       name: 'loginPage',
       component: LoginPage
     },
+
     {
       path: '/register',
       name: 'registerPage',
@@ -34,11 +36,29 @@ const router = createRouter({
         requiresAuth: true
       }
     },
+
+    {
+      path: '/games/create',
+      name: 'createGamePage',
+      component: GameForm,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/games/edit/:id',
+      name: 'editGamePage',
+      component: GameForm,
+      meta: {
+        requiresAuth: true
+      }
+    },
     {
       path: '/games/:id',
       name: 'gamePage',
       component: GamePage,
     },
+
     {
       path: '/cart',
       name: 'cartPage',
