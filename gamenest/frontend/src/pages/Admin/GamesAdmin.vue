@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { api } from '@/api'
 import { useUserStore } from '@/stores/userStore'
+import { useRoute } from 'vue-router'
 import { isAxiosError } from 'axios'
 import { isApplicationError } from '@/composables/useApplicationError'
 import type { Game } from '@/types'
@@ -15,6 +16,12 @@ const userStore = useUserStore()
 const gameToDelete = ref<Game | undefined>(undefined)
 const exception = ref<ApplicationError>()
 const loading = ref(false)
+
+const feedback = ref('')
+const error = ref<ApplicationError>()
+const route = useRoute()
+
+let message = route.query.message || ''
 
 const fetchGames = async () => {
   try {
@@ -61,11 +68,24 @@ async function deleteGame(id: number) {
 </script>
 
 <template>
-  <div class="flex mb-4 px-5 py-2 w-full">
-    <h2 class="text-lg font-semibold">Games List</h2>
+  <div v-if="message" class="d-flex justify-content-center">
+    <div
+      class="col-10 col-lg-5 alert alert-dismissible fade show"
+      :class="{ 'alert-danger': error, 'alert-success': !error }"
+      role="alert"
+    >
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  </div>
 
-    <RouterLink to="/games/create" class="btn btn-primary align-items-end">
-      Criar Jogo <i class="bi bi-file-plus-fill"></i>
+  <h2 class="text-lg font-semibold text-center my-4">Lista de Jogos</h2>
+
+  <div class="d-flex mb-4 px-5 py-2 w-full justify-content-center">
+    <RouterLink to="/games/create">
+      <button class="btn btn-outline-success fs-5">
+        Criar Jogo <i class="bi bi-plus-circle"></i>
+      </button>
     </RouterLink>
   </div>
 
