@@ -85,8 +85,6 @@ async function createGame() {
 
     console.log(data.data)
     feedback.value = 'Jogo criado com sucesso.'
-
-    router.push({ path: '/admin', query: { message: feedback.value } })
   } catch (e) {
     if (isAxiosError(e) && isApplicationError(e.response?.data)) {
       error.value = e.response?.data
@@ -94,6 +92,7 @@ async function createGame() {
     }
   } finally {
     loading.value = false
+    router.push({ path: '/admin', query: { message: feedback.value } })
   }
 }
 
@@ -141,7 +140,6 @@ async function updateGame() {
       await getGame()
     }
     feedback.value = 'Jogo atualizado com sucesso.'
-    router.push({ path: '/admin', query: { message: feedback.value } })
   } catch (e) {
     if (isAxiosError(e) && isApplicationError(e.response?.data)) {
       error.value = e.response?.data
@@ -149,6 +147,7 @@ async function updateGame() {
     }
   } finally {
     loading.value = false
+    router.push({ path: '/admin', query: { message: feedback.value } })
   }
 }
 </script>
@@ -182,6 +181,7 @@ async function updateGame() {
             id="coverInput"
             accept="image/*"
             class="form-control"
+            required
           />
         </div>
 
@@ -193,6 +193,7 @@ async function updateGame() {
             id="nameInput"
             class="form-control"
             placeholder="an awesome title"
+            required
           />
         </div>
 
@@ -205,6 +206,7 @@ async function updateGame() {
             class="form-control"
             placeholder="00.00"
             step="0.01"
+            required
           />
         </div>
 
@@ -216,6 +218,7 @@ async function updateGame() {
             id="developerInput"
             class="form-control"
             placeholder="desenvolvedora"
+            required
           />
         </div>
 
@@ -227,6 +230,7 @@ async function updateGame() {
             class="form-control"
             placeholder="descrição"
             style="height: 200px; padding-top: 10px; padding-bottom: 10px"
+            required
           ></textarea>
         </div>
       </div>

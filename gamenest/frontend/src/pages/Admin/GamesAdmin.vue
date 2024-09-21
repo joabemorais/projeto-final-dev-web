@@ -79,9 +79,9 @@ async function deleteGame(id: number) {
     </div>
   </div>
 
-  <div class="d-flex mb-4 px-5 py-2 w-full justify-content-between">
-    <h2 class="text-lg font-semibold">Lista de Jogos</h2>
+  <h2 class="text-lg font-semibold text-center my-4">Lista de Jogos</h2>
 
+  <div class="d-flex mb-4 px-5 py-2 w-full justify-content-center">
     <RouterLink to="/games/create">
       <button class="btn btn-outline-success fs-5">
         Criar Jogo <i class="bi bi-plus-circle"></i>
