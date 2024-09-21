@@ -6,7 +6,7 @@ import { useUpload } from '@/composables/useUpload'
 import { useUserStore } from '@/stores/userStore'
 import type { ApplicationError, Game } from '@/types'
 import { isApplicationError } from '@/composables/useApplicationError'
-import { RouterLink, useRoute } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 
 const id = ref<number | null>(null)
 const nome = ref('')
@@ -23,10 +23,11 @@ const feedback = ref('')
 const error = ref<ApplicationError>()
 
 const route = useRoute()
+const router = useRouter()
 
 onMounted(() => {
   id.value = route.params.id ? Number(route.params.id) : null
-  console.log('ID:', id.value) // Debugging statement to check the value of id
+  // console.log('ID:', id.value) // Debugging statement to check the value of id
   if (id.value) {
     getGame()
   }
@@ -35,7 +36,7 @@ onMounted(() => {
 async function getGame() {
   try {
     loading.value = true
-    const { data } = await api.get(`/games/${route.params.id}`, {
+    const { data } = await api.get(`/jogos/${route.params.id}`, {
       params: {
         populate: 'cover'
       }
@@ -65,7 +66,7 @@ async function createGame() {
   try {
     loading.value = true
     const formData = new FormData()
-    formData.append('files.cover', capa.value as File)
+    formData.append('files.Capa', capa.value as File)
     formData.append(
       'data',
       JSON.stringify({
@@ -76,7 +77,7 @@ async function createGame() {
       })
     )
 
-    const { data } = await api.post('/games', formData, {
+    const { data } = await api.post('/jogos', formData, {
       headers: {
         Authorization: `Bearer ${userStore.jwt}`
       }
@@ -84,6 +85,8 @@ async function createGame() {
 
     console.log(data.data)
     feedback.value = 'Jogo criado com sucesso.'
+
+    router.push({ path: '/admin', query: { message: feedback.value } })
   } catch (e) {
     if (isAxiosError(e) && isApplicationError(e.response?.data)) {
       error.value = e.response?.data
@@ -100,7 +103,7 @@ async function updateGame() {
 
     if (capa.value) {
       const formData = new FormData()
-      formData.append('files.cover', capa.value as File)
+      formData.append('files.Capa', capa.value as File)
       formData.append(
         'data',
         JSON.stringify({
@@ -111,17 +114,16 @@ async function updateGame() {
         })
       )
 
-      const { data } = await api.put(`/games/${id.value}`, formData, {
+      const { data } = await api.put(`/jogos/${id.value}`, formData, {
         headers: {
           Authorization: `Bearer ${userStore.jwt}`
         }
       })
 
       console.log(data.data)
-      feedback.value = 'Jogo atualizado com sucesso.'
     } else {
       const { data } = await api.put(
-        `/games/${id.value}`,
+        `/jogos/${id.value}`,
         {
           data: {
             Nome: nome.value,
@@ -137,8 +139,9 @@ async function updateGame() {
         }
       )
       await getGame()
-      feedback.value = `Jogo ${data.data.title} atualizado com sucesso.`
     }
+    feedback.value = 'Jogo atualizado com sucesso.'
+    router.push({ path: '/admin', query: { message: feedback.value } })
   } catch (e) {
     if (isAxiosError(e) && isApplicationError(e.response?.data)) {
       error.value = e.response?.data
@@ -197,6 +200,7 @@ async function updateGame() {
           id="priceInput"
           class="form-control"
           placeholder="00.00"
+          step="0.01"
         />
       </div>
       <div class="col-2 mb-3">
