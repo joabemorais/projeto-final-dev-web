@@ -11,7 +11,8 @@ export const useUserStore = defineStore('user', () => {
       name: localStorage.getItem('role') || ''
     },
     carrinho: {
-      id: Number(localStorage.getItem('carrinho'))
+      id: Number(localStorage.getItem('carrinho')),
+      jogos: []
     }
   })
 

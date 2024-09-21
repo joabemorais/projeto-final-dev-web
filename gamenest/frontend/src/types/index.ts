@@ -22,6 +22,7 @@ export type User = {
 
 type Carrinho = {
   id: number
+  jogos : Game[]
 }
 
 type Role = {

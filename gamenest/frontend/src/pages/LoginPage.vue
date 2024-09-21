@@ -34,7 +34,16 @@ async function authenticate() {
         Authorization: `Bearer ${jwt}`
       },
       params: {
-        populate: 'role,carrinho'
+        populate: {
+          role: true,
+          carrinho: {
+            populate: {
+              jogos: {
+                populate: 'Capa'
+              }
+            }
+          }
+        }
       }
     })
 
@@ -47,6 +56,7 @@ async function authenticate() {
     } else {
       router.push('/')
     }
+    console.log(userStore.user)
   } catch (e) {
     if (isAxiosError(e) && isApplicationError(e.response?.data)) {
       exception.value = e.response?.data

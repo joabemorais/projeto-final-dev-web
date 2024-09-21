@@ -1,58 +1,22 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed} from 'vue';
 import { api } from '@/api';
 import { useUserStore } from '@/stores/userStore';
 import type { ApplicationError } from '@/types'
 import { isAxiosError } from 'axios'
 import { isApplicationError } from '@/composables/useApplicationError';
 import CartItem from '@/components/CartItem.vue';
-import type { Game } from '@/types'
 
 const userStore = useUserStore();
 
 const error = ref<ApplicationError>()
 const feedback = ref('')
 
-const cartId = ref(0)
-const jogos = ref([] as Game[])
+const cartId = ref(userStore.user.carrinho.id)
+const jogos = ref(userStore.user.carrinho.jogos)
 
-const precoFinal = ref(0)
+const precoFinal = ref(total())
 const precoFormatado = computed(() => precoFinal.value.toFixed(2))
-
-const fetchGames = async () => {
-  try {
-    const {data} = await api.get('/users/me', {
-        headers: {
-            Authorization: `Bearer ${userStore.jwt}`
-        },
-        params: {
-            populate: {
-                carrinho: {
-                    populate: {
-                        jogos: {
-                            populate: 'Capa'
-                        }
-                    }
-                }
-            }
-        }
-    })
-
-    cartId.value = data.carrinho.id
-    jogos.value = data.carrinho.jogos
-
-    precoFinal.value = total()
-    
-    } catch (e) {
-        if (isAxiosError(e) && isApplicationError(e.response?.data)) {
-            error.value = e.response?.data
-            feedback.value = error.value.error.message
-        }
-    }
-}
-onMounted(() => {
-    fetchGames()
-})
 
 function total() {
     let total = 0
@@ -65,6 +29,7 @@ function total() {
 function remove(id: number) {
     try {
         jogos.value = jogos.value.filter(jogo => jogo.id !== id)
+        userStore.user.carrinho.jogos = jogos.value
 
         const newCart = {
             data: {
