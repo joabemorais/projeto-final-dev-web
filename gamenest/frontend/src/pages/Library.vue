@@ -10,7 +10,7 @@ const route = useRoute();
 const userStore = useUserStore();
 const jogos = ref([] as Game[])
 
-let message = route.query.message || '';
+let message = ref(route.query.message || '')
 
 const fetchGames = async () => {
   try {
@@ -41,10 +41,12 @@ onMounted(() => {
   <h1 class="container text-center my-3 my-xl-5">Seus jogos</h1>
   <div class="container row mx-auto g-4 my-4">
     <div v-if="message">
-      <div class="alert alert-success text-center" role="alert">
+      <div class="alert alert-success alert-dismissible text-center" role="alert">
         {{ message }}
+        <button type="button" class="btn-close" aria-label="Close" @click="message = ''"></button>
       </div>
     </div>
+
     <GameCardLibrary
       v-for="jogo in jogos"
       :Nome="jogo.Nome"
