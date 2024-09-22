@@ -24,17 +24,19 @@ const ratings = ref([] as Rating[])
 const jogo = ref({} as Game)
 let precoFormatado = ref('')
 
+
 const fetchRatings = async () => {
   try {
-    const response = await api.get(`/avaliacaos?filters[jogo][id][$eq]=${route.params.id}`, {
+    const response = await api.get(`/avaliacaos?filters[jogo][id][$eq]=${route.params.id}&populate=users_permissions_user`, {
       headers: {
         Authorization: `Bearer ${userStore.jwt}`
       }
     })
     ratings.value = response.data.data
-  } catch (error) {
-    if (isApplicationError(error.response?.data)) {
-      error.value = error.response?.data as ApplicationError
+  } catch (e) {
+    if (isAxiosError(e) && isApplicationError(e.response?.data)) {
+      error.value = e.response?.data
+      feedback.value = error.value.error.message
     }
   }
 }

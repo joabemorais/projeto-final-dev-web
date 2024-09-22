@@ -18,7 +18,7 @@ const getButtonClass = (feedback: boolean) => {
 <template>
   <div class="card mb-3 d-flex flex-row justify-content-between align-items-center">
     <div class="card-body">
-      <p class="card-text">{{ props.rating.Feedback }}</p>
+      <p class="card-text">{{ props.rating.users_permissions_user.username }}</p>
       <p class="card-text">
         <small class="text-muted">{{ props.rating.Corpo }}</small>
       </p>
