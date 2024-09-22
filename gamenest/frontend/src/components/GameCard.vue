@@ -22,7 +22,9 @@ const precoFormatado = computed(() => props.Preco.toFixed(2))
         <h5 class="card-title mb-3">{{ Nome }}</h5>
         <div class="mt-auto w-100">
           <p class="preco-jogo mb-2">R${{ precoFormatado }}</p>
-          <a href="#" class="btn btn-primary w-100">Comprar</a>
+          <router-link :to="`/games/${id}`">
+            <a href="#" class="btn btn-primary w-100">Ver mais</a>
+          </router-link>
         </div>
       </div>
     </div>
