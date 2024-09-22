@@ -17,6 +17,8 @@ const feedback = ref('')
 const route = useRoute()
 const router = useRouter()
 
+const ownedGames = ref([] as Game[])
+
 const jogo = ref({} as Game)
 let precoFormatado = ref('')
 
@@ -28,6 +30,24 @@ const fetchGame = async () => {
   } catch (error) {
     console.error(error)
   }
+}
+
+const getOwnedGames = async () => {
+  if (!userStore.isAuthenticated) return
+  
+  try {
+    const {data} = await api.get(`users/${userStore.user.id}/?populate=jogos`, {
+      headers: {
+        Authorization: `Bearer ${userStore.jwt}`
+      }
+    })
+    ownedGames.value = data.jogos
+  } catch (e) {
+      if (isAxiosError(e) && isApplicationError(e.response?.data)) {
+        error.value = e.response?.data
+        feedback.value = error.value.error.message
+      }
+    }
 }
 
 async function addToCart() {
@@ -60,6 +80,7 @@ async function addToCart() {
 
 onMounted(() => {
   fetchGame()
+  getOwnedGames()
 })
 </script>
 
@@ -78,6 +99,7 @@ onMounted(() => {
                         <p class="card-text">Desenvolvedor: {{ jogo.Desenvolvedora }}</p>
                         <p class="card-text">Preço: <span style="color: green; font-weight: bold;">R${{ precoFormatado }}</span></p>
                         <button v-if="userStore.isAuthenticated && userStore.user.carrinho.jogos.some(j => j.id === jogo.id)" href="#" class="btn btn-success">Adicionado ao carrinho! <i class="bi bi-cart-fill"></i></button>
+                        <button v-else-if="ownedGames.some(j => j.id === jogo.id)" href="#" class="btn btn-secondary">Na biblioteca <i class="bi bi-collection"></i></button>
                         <button v-else @click="addToCart" href="#" class="btn btn-primary">Adicionar ao carrinho <i class="bi bi-cart-fill"></i></button>
                     </div>
                 </div>
