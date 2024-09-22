@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { ref, computed} from 'vue';
 import { api } from '@/api';
+
+import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/userStore';
 import type { ApplicationError } from '@/types'
 import { isAxiosError } from 'axios'
 import { isApplicationError } from '@/composables/useApplicationError';
 import CartItem from '@/components/CartItem.vue';
+import router from '@/router';
 
 const userStore = useUserStore();
 
@@ -88,6 +91,8 @@ async function buy() {
         })
         userStore.user.carrinho.jogos = []
         precoFinal.value = total()
+
+        router.push({ path: '/library', query: { message: 'Compra realizada com sucesso!' } })
     }
     catch (e) {
         if (isAxiosError(e) && isApplicationError(e.response?.data)) {

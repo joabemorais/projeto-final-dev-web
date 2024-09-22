@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { api } from '@/api'
+import { useRoute } from 'vue-router';
 import { useUserStore } from '@/stores/userStore'
 import GameCardLibrary from '@/components/GameCardLibrary.vue'
 import type { Game } from '@/types'
 
+const route = useRoute();
 const userStore = useUserStore();
 const jogos = ref([] as Game[])
+
+let message = route.query.message || '';
 
 const fetchGames = async () => {
   try {
@@ -36,6 +40,11 @@ onMounted(() => {
 <template>
   <h1 class="container text-center my-3 my-xl-5">Seus jogos</h1>
   <div class="container row mx-auto g-4 my-4">
+    <div v-if="message">
+      <div class="alert alert-success text-center" role="alert">
+        {{ message }}
+      </div>
+    </div>
     <GameCardLibrary
       v-for="jogo in jogos"
       :Nome="jogo.Nome"

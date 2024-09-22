@@ -77,34 +77,21 @@ async function authenticate() {
       <form @submit.prevent="authenticate" class="border p-3 rounded my-3">
         <h4>Entrar</h4>
         <div v-if="message">
-        <div class="alert alert-success" role="alert">
-          {{ message }}
+          <div class="alert alert-success" role="alert">
+            {{ message }}
+          </div>
         </div>
-      </div>
         <div v-if="exception" class="alert alert-danger" role="alert">
           {{ exception.error.message }}
         </div>
         <div class="mb-3 mt-4">
           <label for="exampleInputEmail1" class="form-label">Email</label>
-          <input
-            type="email"
-            class="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            v-model="identifier"
-            placeholder="exemplo@mail.com"
-            required
-          />
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+            v-model="identifier" placeholder="exemplo@mail.com" required />
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Senha</label>
-          <input
-            type="password"
-            class="form-control"
-            v-model="password"
-            id="exampleInputPassword1"
-            required
-          />
+          <input type="password" class="form-control" v-model="password" id="exampleInputPassword1" required />
         </div>
         <button type="submit" class="btn btn-primary mt-2">Enviar</button>
       </form>
@@ -114,19 +101,19 @@ async function authenticate() {
 </template>
 
 <style scoped>
-.fill {
-  height: 71px;
-}
+  .fill {
+    height: 71px;
+  }
 
-.caixa-login {
-  height: 70vh;
-  display: flex;
-  align-items: center;
-}
+  .caixa-login {
+    height: 70vh;
+    display: flex;
+    align-items: center;
+  }
 
-h1 {
-  font-family: 'Tiny5';
-  text-align: center;
-  font-size: xxx-large;
-}
+  h1 {
+    font-family: 'Tiny5';
+    text-align: center;
+    font-size: xxx-large;
+  }
 </style>
