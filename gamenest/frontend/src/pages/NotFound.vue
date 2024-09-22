@@ -11,6 +11,6 @@
 
 <style scoped>
 .container {
-  height: 75vh;
+  height: 69vh;
 }
 </style>
