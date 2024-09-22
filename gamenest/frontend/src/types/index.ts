@@ -33,6 +33,8 @@ export type Rating = {
   id: number
   Corpo: string
   Feedback: boolean
+  users_permissions_user: User
+  game: Game
 }
 
 export interface ApplicationError {

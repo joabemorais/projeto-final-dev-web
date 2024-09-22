@@ -24,17 +24,20 @@ const ratings = ref([] as Rating[])
 const jogo = ref({} as Game)
 let precoFormatado = ref('')
 
-// const fetchRatings = async () => {
-//   try {
-//     loading.value = true
-//     const response = await api.get(`/avaliacoes?jogo=${route.params.id}`)
-//     avaliacoes.value = response.data.data
-//   } catch (error) {
-//     if (isApplicationError(error.response?.data)) {
-//       error.value = error.response?.data as ApplicationError
-//     }
-//   }
-// }
+const fetchRatings = async () => {
+  try {
+    const response = await api.get(`/avaliacaos?filters[jogo][id][$eq]=${route.params.id}&populate=users_permissions_user,game`, {
+      headers: {
+        Authorization: `Bearer ${userStore.jwt}`
+      }
+    })
+    ratings.value = response.data.data
+  } catch (error) {
+    if (isApplicationError(error.response?.data)) {
+      error.value = error.response?.data as ApplicationError
+    }
+  }
+}
 
 const fetchGame = async () => {
   try {
@@ -97,6 +100,7 @@ async function addToCart() {
 onMounted(() => {
   fetchGame()
   getOwnedGames()
+  fetchRatings()
 })
 </script>
 
@@ -149,17 +153,19 @@ onMounted(() => {
   <div class="container col-xl-8 my-5">
     <h2>Avaliações</h2>
     <hr />
-    <div class="d-flex justify-content-center">
-      <div class="w-50">
+    <div class="d-lg-flex justify-content-lg-center">
+      <div class="col-lg-6">
         <RatingForm :gameId="Number(route.params.id)" :userId="Number(userStore.user.id)" />
+        <hr>
       </div>
     </div>
-    <div v-if="ratings.length" class="mt-4">
-      <div v-for="rating in ratings" :key="rating.id">
-        <RatingCard :rating="rating" />
+    <div class="d-lg-flex justify-content-lg-center mt-2">
+      <div v-if="ratings.length" class="mt-4 col-lg-6">
+        <div v-for="rating in ratings" :key="rating.id" class="">
+          <RatingCard :rating="rating" />
+        </div>
       </div>
     </div>
-    <hr />
   </div>
 </template>
 

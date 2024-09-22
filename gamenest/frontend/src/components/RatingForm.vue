@@ -5,11 +5,14 @@ import { api } from '@/api'
 import type { ApplicationError, Rating } from '@/types'
 import { isApplicationError } from '@/composables/useApplicationError'
 import { useUserStore } from '@/stores/userStore'
+import { defineEmits } from 'vue'
 
 const props = defineProps<{
   gameId: number
   userId: number
 }>()
+
+const emit = defineEmits(['ratingCreated'])
 
 const corpo = ref('')
 const feedback = ref<boolean | null>(null)
@@ -41,11 +44,11 @@ async function submitRating() {
       }
     })
 
-    console.log(data.data)
-
     corpo.value = ''
     feedback.value = null
     rating.value = data.data
+
+    emit('ratingCreated')
   } catch (e) {
     if (isAxiosError(e) && isApplicationError(e.response?.data)) {
       error.value = e.response?.data
