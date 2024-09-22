@@ -8,6 +8,7 @@ import Cart from '@/pages/Cart.vue'
 import GamesAdmin from '@/pages/Admin/GamesAdmin.vue'
 import GameForm from '@/pages/Admin/GameForm.vue'
 import RegisterPage from '@/pages/RegisterPage.vue'
+import Library from '@/pages/Library.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -67,6 +68,14 @@ const router = createRouter({
         requiresAuth: true
       }
     },
+    {
+      path: '/library',
+      name: 'libraryPage',
+      component: Library, 
+      meta: {
+        requiresAuth: true
+      }
+    }
   ]
 })
 
