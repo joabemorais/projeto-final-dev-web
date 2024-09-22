@@ -154,12 +154,17 @@ onMounted(() => {
     <h2>Avaliações</h2>
     <hr />
 
-    <RatingForm :gameId="Number(route.params.id)" :userId="Number(userStore.user.id)" />
+    <div class="d-flex justify-content-center">
+      <div class="w-50">
+        <RatingForm :gameId="Number(route.params.id)" :userId="Number(userStore.user.id)" />
+      </div>
+    </div>
     <div v-if="avaliacoes.length" class="mt-4">
       <div v-for="avaliacao in avaliacoes" :key="avaliacao.id">
         <RatingCard :rating="avaliacao" />
       </div>
     </div>
+    <hr>
   </div>
 </template>
 
