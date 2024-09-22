@@ -39,9 +39,11 @@ function logout() {
             <i class="bi bi-caret-down-fill"></i>
           </div>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-            <li>
-              <a class="dropdown-item" href="#"><i class="bi bi-person"></i> Perfil</a>
-            </li>
+            <router-link :to="'/profile'">
+              <li>
+                <a class="dropdown-item" href="#"><i class="bi bi-person"></i> Perfil</a>
+              </li>
+            </router-link>
             <router-link :to="'/cart'">
               <li>
                 <a class="dropdown-item" href="#"><i class="bi bi-cart2"></i> Carrinho</a>
