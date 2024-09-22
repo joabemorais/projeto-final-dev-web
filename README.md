@@ -19,7 +19,6 @@ A aplicação consiste em uma loja virtual de jogos eletrônicos em mídia digit
 - Jogo
 - Avaliação
 - Carrinho
-- Pedido
 
 ## :triangular_flag_on_post:	 Principais funcionalidades da aplicação
 
@@ -46,17 +45,7 @@ A aplicação consiste em uma loja virtual de jogos eletrônicos em mídia digit
 
 | Entidade| Criação | Leitura | Atualização | Remoção |
 | --- | --- | --- | --- | --- |
-| Usuário |  |  |  |  |
+| Usuário | X | X | X |  |
 | Jogo | X | X | X | X |
-| Avaliação | X | X | X | X |
-| Carrinho | X | X | X | X |
-| Pedido | X | X | X | X |
-
-## :neckbeard: Rotas da API REST utilizadas
-
-| Método HTTP | URL |
-| --- | --- |
-| GET | ? * |
-| POST | ? |
-
-\* Ainda serão definidas.
+| Avaliação | X | X | X |  |
+| Carrinho | X | X | X |  |
