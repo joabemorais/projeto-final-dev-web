@@ -26,7 +26,7 @@ let precoFormatado = ref('')
 
 const fetchRatings = async () => {
   try {
-    const response = await api.get(`/avaliacaos?filters[jogo][id][$eq]=${route.params.id}&populate=users_permissions_user,game`, {
+    const response = await api.get(`/avaliacaos?filters[jogo][id][$eq]=${route.params.id}`, {
       headers: {
         Authorization: `Bearer ${userStore.jwt}`
       }
@@ -156,11 +156,11 @@ onMounted(() => {
     <div class="d-lg-flex justify-content-lg-center">
       <div class="col-lg-6">
         <RatingForm :gameId="Number(route.params.id)" :userId="Number(userStore.user.id)" />
-        <hr>
+        <hr />
       </div>
     </div>
     <div class="d-lg-flex justify-content-lg-center mt-2">
-      <div v-if="ratings.length" class="mt-4 col-lg-6">
+      <div v-if="ratings.length" class="mt-4 col-lg-5">
         <div v-for="rating in ratings" :key="rating.id" class="">
           <RatingCard :rating="rating" />
         </div>

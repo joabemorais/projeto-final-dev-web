@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Rating } from '@/types'
 import { defineProps } from 'vue'
+import type { Rating } from '@/types'
 
 const props = defineProps<{
   rating: Rating
@@ -24,7 +24,7 @@ const getButtonClass = (feedback: boolean) => {
       </p>
     </div>
     <div class="thumbs-icon">
-      <button type="button" :class="`btn ${getButtonClass(props.rating.Feedback)} me-3`">
+      <button type="button" :class="`btn ${getButtonClass(props.rating.Feedback)} me-3 no-cursor`">
         <i :class="`bi ${getThumbsIconClass(props.rating.Feedback)} fs-2`"></i>
       </button>
     </div>
@@ -48,11 +48,23 @@ const getButtonClass = (feedback: boolean) => {
   justify-content: center;
   width: 3rem; /* Adjust the size as needed */
   height: 3rem; /* Adjust the size as needed */
-  padding: 0;
-  border-radius: 0.25rem;
+  cursor: default; /* Ensure the cursor does not change */
 }
 
-.btn i {
-  font-size: 1.5rem; /* Adjust the icon size as needed */
+/* Disable hover effect */
+.btn-success:hover {
+  background-color: #198754; /* Default success background color */
+  border-color: #198754; /* Default success border color */
+  color: #fff; /* Default text color */
+}
+
+.btn-danger:hover {
+  background-color: #dc3545; /* Default danger background color */
+  border-color: #dc3545; /* Default danger border color */
+  color: #fff; /* Default text color */
+}
+
+.no-cursor {
+  cursor: default;
 }
 </style>
