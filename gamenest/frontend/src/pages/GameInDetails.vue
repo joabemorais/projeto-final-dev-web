@@ -24,7 +24,6 @@ const ratings = ref([] as Rating[])
 const jogo = ref({} as Game)
 let precoFormatado = ref('')
 
-
 const fetchRatings = async () => {
   try {
     const response = await api.get(`/avaliacaos?filters[jogo][id][$eq]=${route.params.id}&populate=users_permissions_user`, {
@@ -97,6 +96,11 @@ async function addToCart() {
       feedback.value = error.value.error.message
     }
   }
+
+}
+
+function updateRatings(newRating: Rating) {
+  ratings.value.push(newRating)
 }
 
 onMounted(() => {
@@ -157,7 +161,10 @@ onMounted(() => {
     <hr />
     <div class="d-lg-flex justify-content-lg-center">
       <div class="col-lg-6">
-        <RatingForm :gameId="Number(route.params.id)" :userId="Number(userStore.user.id)" />
+        <RatingForm
+          :gameId="Number(route.params.id)"
+          :userId="Number(userStore.user.id)"
+          @new-rating="updateRatings"/>
         <hr />
       </div>
     </div>

@@ -13,8 +13,6 @@ const props = defineProps<{
   userId: number
 }>()
 
-const emit = defineEmits(['ratingCreated'])
-
 const corpo = ref('')
 const feedback = ref<boolean | null>(null)
 const error = ref<ApplicationError | null>(null)
@@ -22,6 +20,8 @@ const loading = ref(false)
 const rating = ref<Rating | null>(null)
 const userStore = useUserStore()
 const router = useRouter()
+
+const emit = defineEmits(['new-rating'])
 
 function setFeedback(value: boolean) {
   feedback.value = feedback.value === value ? null : value
@@ -57,7 +57,15 @@ async function submitRating() {
     feedback.value = null
     rating.value = data.data
 
-    emit('ratingCreated')
+    const ratingData = {
+      ...data.data,
+      users_permissions_user: {
+        id: userStore.user.id,
+        username: userStore.user.username
+      }
+    }
+
+    emit('new-rating', ratingData)
   } catch (e) {
     if (isAxiosError(e) && isApplicationError(e.response?.data)) {
       error.value = e.response?.data
