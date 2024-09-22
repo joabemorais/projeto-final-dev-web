@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { useUserStore } from '@/stores/userStore'
+import { useRouter } from 'vue-router';
+
 const userStore = useUserStore()
+
+const router = useRouter()
+
+function logout() {
+  userStore.logout()
+  router.push('/')
+}
 </script>
 
 <template>
@@ -48,7 +57,7 @@ const userStore = useUserStore()
             </router-link>
             <li><hr class="dropdown-divider" /></li>
             <li>
-              <a @click="userStore.logout" class="dropdown-item" href="#"
+              <a @click="logout" class="dropdown-item" href="#"
                 ><i class="bi bi-box-arrow-right"></i> Logout</a
               >
             </li>
