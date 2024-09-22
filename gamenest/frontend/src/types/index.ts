@@ -17,6 +17,12 @@ export type User = {
   username: string
   email: string
   role: Role
+  carrinho: Carrinho
+}
+
+type Carrinho = {
+  id: number
+  jogos : Game[]
 }
 
 type Role = {

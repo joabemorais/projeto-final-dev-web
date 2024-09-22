@@ -1,63 +1,26 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { api } from '@/api'
 import { useUserStore } from '@/stores/userStore'
 import type { ApplicationError } from '@/types'
 import { isAxiosError } from 'axios'
 import { isApplicationError } from '@/composables/useApplicationError'
 import CartItem from '@/components/CartItem.vue'
-import type { Game } from '@/types'
 
 const userStore = useUserStore()
 
 const error = ref<ApplicationError>()
 const feedback = ref('')
 
-const cartId = ref(0)
-const jogos = ref([] as Game[])
+const cartId = ref(userStore.user.carrinho.id)
+const cartGames = ref(userStore.user.carrinho.jogos)
 
-const precoFinal = ref(0)
+const precoFinal = ref(total())
 const precoFormatado = computed(() => precoFinal.value.toFixed(2))
-
-console.log(userStore.jwt)
-
-const fetchGames = async () => {
-  try {
-    const { data } = await api.get('/users/me', {
-      headers: {
-        Authorization: `Bearer ${userStore.jwt}`
-      },
-      params: {
-        populate: {
-          carrinho: {
-            populate: {
-              jogos: {
-                populate: 'Capa'
-              }
-            }
-          }
-        }
-      }
-    })
-
-    cartId.value = data.carrinho.id
-    jogos.value = data.carrinho.jogos
-
-    precoFinal.value = total()
-  } catch (e) {
-    if (isAxiosError(e) && isApplicationError(e.response?.data)) {
-      error.value = e.response?.data
-      feedback.value = error.value.error.message
-    }
-  }
-}
-onMounted(() => {
-  fetchGames()
-})
 
 function total() {
   let total = 0
-  jogos.value.forEach((jogo) => {
+  cartGames.value.forEach((jogo) => {
     total += jogo.Preco
   })
   return total
@@ -65,11 +28,12 @@ function total() {
 
 function remove(id: number) {
   try {
-    jogos.value = jogos.value.filter((jogo) => jogo.id !== id)
+    cartGames.value = cartGames.value.filter((jogo) => jogo.id !== id)
+    userStore.user.carrinho.jogos = cartGames.value
 
     const newCart = {
       data: {
-        jogos: jogos.value
+        jogos: cartGames.value
       }
     }
 
@@ -79,6 +43,49 @@ function remove(id: number) {
       }
     })
 
+    precoFinal.value = total()
+  } catch (e) {
+    if (isAxiosError(e) && isApplicationError(e.response?.data)) {
+      error.value = e.response?.data
+      feedback.value = error.value.error.message
+    }
+  }
+}
+
+async function buy() {
+  try {
+    // Getting user's owned games
+    const { data } = await api.get(`users/${userStore.user.id}/?populate=jogos`, {
+      headers: {
+        Authorization: `Bearer ${userStore.jwt}`
+      }
+    })
+    const ownedGames = data.jogos
+
+    // Adding cart games to owned games
+    const order = {
+      jogos: cartGames.value.concat(ownedGames)
+    }
+
+    await api.put(`users/${userStore.user.id}`, order, {
+      headers: {
+        Authorization: `Bearer ${userStore.jwt}`
+      }
+    })
+
+    // Cleaning cart
+    const newCart = {
+      data: {
+        jogos: []
+      }
+    }
+
+    api.put(`/carrinhos/${cartId.value}`, newCart, {
+      headers: {
+        Authorization: `Bearer ${userStore.jwt}`
+      }
+    })
+    userStore.user.carrinho.jogos = []
     precoFinal.value = total()
   } catch (e) {
     if (isAxiosError(e) && isApplicationError(e.response?.data)) {
@@ -99,18 +106,26 @@ function remove(id: number) {
       {{ feedback }}
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-  </div>
-  <h2 class="my-5 text-center">Carrinho de Compras</h2>
-  <div class="geral">
-    <div class="cart">
-      <CartItem
-        v-for="jogo in jogos"
-        :Nome="jogo.Nome"
-        :Preco="jogo.Preco"
-        :Capa="jogo.Capa"
-        :id="jogo.id"
-        @remove="remove"
-      />
+    <h2 class="my-5 text-center">Carrinho de Compras</h2>
+    <div class="geral">
+      <div v-if="cartGames.length" class="cart">
+        <CartItem
+          v-for="jogo in cartGames"
+          :Nome="jogo.Nome"
+          :Preco="jogo.Preco"
+          :Capa="jogo.Capa"
+          :id="jogo.id"
+          @remove="remove"
+        />
+      </div>
+      <div class="cart-review">
+        <h5>Resumo</h5>
+        <p>
+          Total estimado:
+          <span style="font-weight: bold; color: green">R${{ precoFormatado }}</span>
+        </p>
+        <button @click="buy" type="button" class="btn btn-primary w-100">Realizar pagamento</button>
+      </div>
     </div>
     <div class="cart-review">
       <h5>Resumo</h5>

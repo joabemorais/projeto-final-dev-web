@@ -1,24 +1,32 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from 'vue'
 import { api, BASE_URL } from '@/api'
-import { useRoute } from 'vue-router'
-import type { Game, ApplicationError, Avaliacao } from '@/types'
+import type { ApplicationError } from '@/types'
+import { isAxiosError } from 'axios'
 import { isApplicationError } from '@/composables/useApplicationError'
+import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/userStore'
+import type { Game, Avaliacao } from '@/types'
+
 import RatingForm from '@/components/RatingForm.vue'
 import RatingCard from '@/components/RatingCard.vue'
-import { useUserStore } from '@/stores/userStore'
+
+const error = ref<ApplicationError>()
+const feedback = ref('')
 
 const route = useRoute()
+const router = useRouter()
+
+const ownedGames = ref([] as Game[])
 
 const jogo = ref({} as Game)
 let precoFormatado = ref('')
 
 const avaliacoes = ref<Avaliacao[]>([])
-const error = ref<ApplicationError>()
 const loading = ref(false)
 
 const userStore = useUserStore()
-console.log(userStore.jwt)
 
 // const fetchRatings = async () => {
 //   try {
@@ -42,9 +50,57 @@ const fetchGame = async () => {
   }
 }
 
+const getOwnedGames = async () => {
+  if (!userStore.isAuthenticated) return
+
+  try {
+    const { data } = await api.get(`users/${userStore.user.id}/?populate=jogos`, {
+      headers: {
+        Authorization: `Bearer ${userStore.jwt}`
+      }
+    })
+    ownedGames.value = data.jogos
+  } catch (e) {
+    if (isAxiosError(e) && isApplicationError(e.response?.data)) {
+      error.value = e.response?.data
+      feedback.value = error.value.error.message
+    }
+  }
+}
+
+async function addToCart() {
+  if (!userStore.isAuthenticated) {
+    feedback.value = 'Faça login para adicionar jogos ao carrinho.'
+    router.push({ path: '/login', query: { message: feedback.value } })
+    return
+  }
+
+  try {
+    const carrinho = userStore.user.carrinho.jogos
+    carrinho.push(jogo.value)
+
+    await api.put(
+      `/carrinhos/${userStore.user.carrinho.id}`,
+      {
+        data: { jogos: carrinho }
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${userStore.jwt}`
+        }
+      }
+    )
+  } catch (e) {
+    if (isAxiosError(e) && isApplicationError(e.response?.data)) {
+      error.value = e.response?.data
+      feedback.value = error.value.error.message
+    }
+  }
+}
+
 onMounted(() => {
   fetchGame()
-  // fetchRatings()
+  getOwnedGames()
 })
 </script>
 
@@ -68,9 +124,26 @@ onMounted(() => {
             <p class="card-text">
               Preço: <span style="color: green; font-weight: bold">R${{ precoFormatado }}</span>
             </p>
-            <a href="#" class="btn btn-primary"
-              >Adicionar ao carrinho <i class="bi bi-cart-fill"></i
-            ></a>
+            <button
+              v-if="
+                userStore.isAuthenticated &&
+                userStore.user.carrinho.jogos.some((j) => j.id === jogo.id)
+              "
+              href="#"
+              class="btn btn-success"
+            >
+              Adicionado ao carrinho! <i class="bi bi-cart-fill"></i>
+            </button>
+            <button
+              v-else-if="ownedGames.some((j) => j.id === jogo.id)"
+              href="#"
+              class="btn btn-secondary"
+            >
+              Na biblioteca <i class="bi bi-collection"></i>
+            </button>
+            <button v-else @click="addToCart" href="#" class="btn btn-primary">
+              Adicionar ao carrinho <i class="bi bi-cart-fill"></i>
+            </button>
           </div>
         </div>
       </div>

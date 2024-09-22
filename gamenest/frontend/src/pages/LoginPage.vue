@@ -34,7 +34,16 @@ async function authenticate() {
         Authorization: `Bearer ${jwt}`
       },
       params: {
-        populate: 'role'
+        populate: {
+          role: true,
+          carrinho: {
+            populate: {
+              jogos: {
+                populate: 'Capa'
+              }
+            }
+          }
+        }
       }
     })
 

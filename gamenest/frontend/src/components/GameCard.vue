@@ -13,8 +13,8 @@ const precoFormatado = computed(() => props.Preco.toFixed(2))
 </script>
 
 <template>
-  <div class="col-12 col-md-6 col-xl-3">
-    <div class="card h-100" style="width: 18rem">
+  <div class="col-12 col-md-6 col-xl-3 mt-0 mb-4">
+    <div class="card h-100" style="width: 100%">
       <router-link :to="`/games/${id}`">
         <img :src="`${BASE_URL}${Capa.url}`" class="card-img-top" :alt="`capa do jogo ${Nome}`" />
       </router-link>
