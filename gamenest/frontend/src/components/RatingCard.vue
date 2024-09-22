@@ -1,3 +1,12 @@
+<script setup lang="ts">
+import type { Avaliacao } from '@/types'
+import { defineProps } from 'vue'
+
+const props = defineProps<{
+  rating: Avaliacao
+}>()
+</script>
+
 <template>
   <div class="card mb-3">
     <div class="card-body">
@@ -8,15 +17,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import type { Avaliacao } from '@/types'
-import { defineProps } from 'vue'
-
-const props = defineProps<{
-  rating: Avaliacao
-}>()
-</script>
 
 <style scoped>
 /* Add your styles here */

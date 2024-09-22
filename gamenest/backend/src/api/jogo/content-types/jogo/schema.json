@@ -39,7 +39,7 @@
         "audios"
       ]
     },
-    "avaliacoes": {
+    "avaliacaos": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::avaliacao.avaliacao",

@@ -76,11 +76,11 @@
       "target": "api::carrinho.carrinho",
       "mappedBy": "users_permissions_user"
     },
-    "avaliacoes": {
+    "avaliacaos": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::avaliacao.avaliacao",
-      "mappedBy": "usuario"
+      "mappedBy": "users_permissions_user"
     }
   }
 }

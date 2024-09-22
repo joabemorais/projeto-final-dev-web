@@ -25,27 +25,31 @@ function setFeedback(value: boolean) {
 async function submitRating() {
   try {
     loading.value = true
+    
+    console.log(userStore.user.id)
+    console.log(userStore.jwt)
 
     const newRating = {
       data: {
         Corpo: corpo.value,
         Feedback: feedback.value,
-        usuario: {
-          id: props.userId
-        },
-        jogo: {
-          id: props.gameId
-        }
+        users_permissions_user: userStore.user.id,
+        jogo: props.gameId
       }
     }
-
-    console.log(userStore.jwt)
 
     const { data } = await api.post('/avaliacaos', newRating, {
       headers: {
         Authorization: `Bearer ${userStore.jwt}`
       }
     })
+
+    // let data: any;
+    // data = await api.get(`/avaliacaos/${data.id}?populate=users_permissions_user,jogo`, {
+    //   headers: {
+    //     Authorization: `Bearer ${userStore.jwt}`
+    //   }
+    // })
 
     corpo.value = ''
     feedback.value = null
@@ -64,7 +68,7 @@ async function submitRating() {
   <form @submit.prevent="submitRating">
     <div class="mb-3 col-7">
       <label for="corpoInput" class="form-label">Escreva a sua avaliação</label>
-      <textarea v-model="corpo" id="corpoInput" class="form-control" required> </textarea>
+      <textarea v-model="corpo" id="corpoInput" class="form-control"> </textarea>
     </div>
     <div class="mb-3">
       <label class="form-label">Gostou do jogo?</label>

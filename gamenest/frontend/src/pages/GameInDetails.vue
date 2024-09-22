@@ -18,21 +18,19 @@ const error = ref<ApplicationError>()
 const loading = ref(false)
 
 const userStore = useUserStore()
-
-console.log(userStore.user.id)
 console.log(userStore.jwt)
 
-const fetchRatings = async () => {
-  try {
-    loading.value = true
-    const response = await api.get(`/avaliacoes?jogo=${route.params.id}`)
-    avaliacoes.value = response.data.data
-  } catch (error) {
-    if (isApplicationError(error.response?.data)) {
-      error.value = error.response?.data as ApplicationError
-    }
-  }
-}
+// const fetchRatings = async () => {
+//   try {
+//     loading.value = true
+//     const response = await api.get(`/avaliacoes?jogo=${route.params.id}`)
+//     avaliacoes.value = response.data.data
+//   } catch (error) {
+//     if (isApplicationError(error.response?.data)) {
+//       error.value = error.response?.data as ApplicationError
+//     }
+//   }
+// }
 
 const fetchGame = async () => {
   try {
@@ -46,7 +44,7 @@ const fetchGame = async () => {
 
 onMounted(() => {
   fetchGame()
-  fetchRatings()
+  // fetchRatings()
 })
 </script>
 

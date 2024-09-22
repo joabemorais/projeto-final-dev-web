@@ -19,17 +19,17 @@
       "type": "boolean",
       "required": true
     },
-    "usuario": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "avaliacoes"
-    },
     "jogo": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::jogo.jogo",
-      "inversedBy": "avaliacoes"
+      "inversedBy": "avaliacaos"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "avaliacaos"
     }
   }
 }
