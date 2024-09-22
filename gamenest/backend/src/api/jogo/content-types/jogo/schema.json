@@ -43,6 +43,12 @@
         "videos",
         "audios"
       ]
+    },
+    "avaliacaos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::avaliacao.avaliacao",
+      "mappedBy": "jogo"
     }
   }
 }
