@@ -138,6 +138,8 @@ async function updateGame() {
         }
       )
       await getGame()
+
+      console.log(data.data)
     }
     feedback.value = 'Jogo atualizado com sucesso.'
   } catch (e) {

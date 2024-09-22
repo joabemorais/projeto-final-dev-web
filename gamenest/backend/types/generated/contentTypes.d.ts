@@ -362,6 +362,121 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiAvaliacaoAvaliacao extends Schema.CollectionType {
+  collectionName: 'avaliacaos';
+  info: {
+    singularName: 'avaliacao';
+    pluralName: 'avaliacaos';
+    displayName: 'Avalia\u00E7\u00E3o';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Corpo: Attribute.String;
+    Feedback: Attribute.Boolean & Attribute.Required;
+    jogo: Attribute.Relation<
+      'api::avaliacao.avaliacao',
+      'manyToOne',
+      'api::jogo.jogo'
+    >;
+    users_permissions_user: Attribute.Relation<
+      'api::avaliacao.avaliacao',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::avaliacao.avaliacao',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::avaliacao.avaliacao',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCarrinhoCarrinho extends Schema.CollectionType {
+  collectionName: 'carrinhos';
+  info: {
+    singularName: 'carrinho';
+    pluralName: 'carrinhos';
+    displayName: 'Carrinho';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    jogos: Attribute.Relation<
+      'api::carrinho.carrinho',
+      'oneToMany',
+      'api::jogo.jogo'
+    >;
+    users_permissions_user: Attribute.Relation<
+      'api::carrinho.carrinho',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::carrinho.carrinho',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::carrinho.carrinho',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiJogoJogo extends Schema.CollectionType {
+  collectionName: 'jogos';
+  info: {
+    singularName: 'jogo';
+    pluralName: 'jogos';
+    displayName: 'Jogo';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Nome: Attribute.String & Attribute.Required;
+    Descricao: Attribute.String;
+    Preco: Attribute.Float & Attribute.Required;
+    Desenvolvedora: Attribute.String & Attribute.Required;
+    Capa: Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Attribute.Required;
+    avaliacaos: Attribute.Relation<
+      'api::jogo.jogo',
+      'oneToMany',
+      'api::avaliacao.avaliacao'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::jogo.jogo', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::jogo.jogo', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -775,135 +890,29 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::jogo.jogo'
     >;
-    avaliacoes: Attribute.Relation<
-      'plugin::users-permissions.user',
-      'oneToMany',
-      'api::avaliacao.avaliacao'
-    >;
     carrinho: Attribute.Relation<
       'plugin::users-permissions.user',
       'oneToOne',
       'api::carrinho.carrinho'
     >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
+    avaliacaos: Attribute.Relation<
       'plugin::users-permissions.user',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'plugin::users-permissions.user',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiAvaliacaoAvaliacao extends Schema.CollectionType {
-  collectionName: 'avaliacaos';
-  info: {
-    singularName: 'avaliacao';
-    pluralName: 'avaliacaos';
-    displayName: 'Avalia\u00E7\u00E3o';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Titulo: Attribute.String & Attribute.Required;
-    Corpo: Attribute.String;
-    Feedback: Attribute.Boolean & Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::avaliacao.avaliacao',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::avaliacao.avaliacao',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiCarrinhoCarrinho extends Schema.CollectionType {
-  collectionName: 'carrinhos';
-  info: {
-    singularName: 'carrinho';
-    pluralName: 'carrinhos';
-    displayName: 'Carrinho';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    jogos: Attribute.Relation<
-      'api::carrinho.carrinho',
-      'oneToMany',
-      'api::jogo.jogo'
-    >;
-    users_permissions_user: Attribute.Relation<
-      'api::carrinho.carrinho',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::carrinho.carrinho',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::carrinho.carrinho',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiJogoJogo extends Schema.CollectionType {
-  collectionName: 'jogos';
-  info: {
-    singularName: 'jogo';
-    pluralName: 'jogos';
-    displayName: 'Jogo';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Nome: Attribute.String & Attribute.Required;
-    Descricao: Attribute.String;
-    Preco: Attribute.Float & Attribute.Required;
-    Desenvolvedora: Attribute.String & Attribute.Required;
-    avaliacoes: Attribute.Relation<
-      'api::jogo.jogo',
       'oneToMany',
       'api::avaliacao.avaliacao'
     >;
-    Capa: Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
-      Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::jogo.jogo', 'oneToOne', 'admin::user'> &
+    createdBy: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToOne',
+      'admin::user'
+    > &
       Attribute.Private;
-    updatedBy: Attribute.Relation<'api::jogo.jogo', 'oneToOne', 'admin::user'> &
+    updatedBy: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToOne',
+      'admin::user'
+    > &
       Attribute.Private;
   };
 }
@@ -918,6 +927,9 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::avaliacao.avaliacao': ApiAvaliacaoAvaliacao;
+      'api::carrinho.carrinho': ApiCarrinhoCarrinho;
+      'api::jogo.jogo': ApiJogoJogo;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -926,9 +938,6 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'api::avaliacao.avaliacao': ApiAvaliacaoAvaliacao;
-      'api::carrinho.carrinho': ApiCarrinhoCarrinho;
-      'api::jogo.jogo': ApiJogoJogo;
     }
   }
 }

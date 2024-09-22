@@ -12,16 +12,24 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Titulo": {
-      "type": "string",
-      "required": true
-    },
     "Corpo": {
       "type": "string"
     },
     "Feedback": {
       "type": "boolean",
       "required": true
+    },
+    "jogo": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::jogo.jogo",
+      "inversedBy": "avaliacaos"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "avaliacaos"
     }
   }
 }
