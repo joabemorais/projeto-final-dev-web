@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useRoute } from 'vue-router';
+import { useRoute } from 'vue-router'
 import { api } from '@/api'
 import { useUserStore } from '@/stores/userStore'
 import { isAxiosError } from 'axios'
@@ -13,11 +13,11 @@ const password = ref('')
 const loading = ref(false)
 const exception = ref<ApplicationError>()
 const router = useRouter()
-const route = useRoute();
+const route = useRoute()
 
 const userStore = useUserStore()
 
-let message = route.query.message || '';
+let message = route.query.message || ''
 
 async function authenticate() {
   try {
@@ -65,7 +65,6 @@ async function authenticate() {
     loading.value = false
   }
 }
-
 </script>
 
 <template>
@@ -73,7 +72,9 @@ async function authenticate() {
 
   <div class="caixa-login">
     <div class="container col col-md-6 col-xl-3">
-      <h1 class="mb-4">GameNest</h1>
+      <router-link :to="'/'" class="no-link-style">
+        <h1 class="mb-4">GameNest</h1>
+      </router-link>
       <form @submit.prevent="authenticate" class="border p-3 rounded my-3">
         <h4>Entrar</h4>
         <div v-if="message">
@@ -86,12 +87,25 @@ async function authenticate() {
         </div>
         <div class="mb-3 mt-4">
           <label for="exampleInputEmail1" class="form-label">Email</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-            v-model="identifier" placeholder="exemplo@mail.com" required />
+          <input
+            type="email"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            v-model="identifier"
+            placeholder="exemplo@mail.com"
+            required
+          />
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Senha</label>
-          <input type="password" class="form-control" v-model="password" id="exampleInputPassword1" required />
+          <input
+            type="password"
+            class="form-control"
+            v-model="password"
+            id="exampleInputPassword1"
+            required
+          />
         </div>
         <button type="submit" class="btn btn-primary mt-2">Enviar</button>
       </form>
@@ -101,19 +115,26 @@ async function authenticate() {
 </template>
 
 <style scoped>
-  .fill {
-    height: 71px;
-  }
+.no-link-style {
+  text-decoration: none;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
 
-  .caixa-login {
-    height: 70vh;
-    display: flex;
-    align-items: center;
-  }
+.fill {
+  height: 71px;
+}
 
-  h1 {
-    font-family: 'Tiny5';
-    text-align: center;
-    font-size: xxx-large;
-  }
+.caixa-login {
+  height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+h1 {
+  font-family: 'Tiny5';
+  text-align: center;
+  font-size: xxx-large;
+}
 </style>
