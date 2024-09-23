@@ -55,15 +55,23 @@ A aplicação consiste em uma loja virtual de jogos eletrônicos em mídia digit
 
 | Método HTTP | URL |
 | --- | --- |
-| GET | api/ |
-| POST | api/ |
-| PUT |  api/ |
-| DELETE | api/ |
-| GET | api/ |
-| POST | api/auth/local/register |
+| GET | api/users-permissions/roles |
+| GET | api/users |
+| GET | api/users/id |
+| GET | api/users/me |
+| DELETE | api//users/id |
 | PUT |  api/users/id |
-| DELETE| api/ |
-| GET | api/ |
-| POST | api/ |
-| PUT | api/ |
-| DELETE | api/ |
+| GET | api/jogos |
+| GET | api/jogos/id |
+| POST | api/jogos |
+| DELETE | api/jogos/id |
+| PUT | api/jogos/id |
+| GET | api/carrinhos |
+| GET | api/carrinhos/id |
+| DELETE | api/carrinhos/id |
+| PUT | api/carrinhos/id |
+| GET | api/avaliacaos |
+| GET | api/avaliacaos/id |
+| POST | api/avaliacaos |
+| DELETE | api/avaliacaos/id |
+| PUT | api/avaliacaos/id |
