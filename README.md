@@ -49,3 +49,8 @@ A aplicação consiste em uma loja virtual de jogos eletrônicos em mídia digit
 | Jogo | X | X | X | X |
 | Avaliação | X | X | X |  |
 | Carrinho | X | X | X |  |
+
+## :neckbeard: Rotas da API REST utilizadas
+
+| GET | ? * |
+| POST | ? |
