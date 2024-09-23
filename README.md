@@ -79,6 +79,7 @@ A aplicação consiste em uma loja virtual de jogos eletrônicos em mídia digit
 ## Contas para acessar o sistema
 
 ### Admin
+
 - Email: admin@mail.com
 - Senha: admin123456
 
