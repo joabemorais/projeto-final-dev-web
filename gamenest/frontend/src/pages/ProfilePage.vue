@@ -89,12 +89,12 @@ onMounted(() => {
       {{ error }}
     </div>
     <div v-if="user" class="profile-info fs-5">
-      <p><strong>Username:</strong> {{ user.username }}</p>
+      <p><strong>Usuário:</strong> {{ user.username }}</p>
       <p><strong>Email:</strong> {{ user.email }}</p>
       <hr />
       <form @submit.prevent="updateUserProfile">
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="username">Nome de usuário</label>
           <input type="text" id="username" v-model="user.username" class="form-control" />
         </div>
         <div class="form-group">

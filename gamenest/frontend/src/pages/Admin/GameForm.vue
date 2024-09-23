@@ -192,7 +192,7 @@ async function updateGame() {
             type="text"
             id="nameInput"
             class="form-control"
-            placeholder="an awesome title"
+            placeholder="Nome do jogo"
             required
           />
         </div>
@@ -217,7 +217,7 @@ async function updateGame() {
             type="text"
             id="developerInput"
             class="form-control"
-            placeholder="desenvolvedora"
+            placeholder="Desenvolvedora"
             required
           />
         </div>
@@ -228,7 +228,7 @@ async function updateGame() {
             v-model="descricao"
             id="descriptionInput"
             class="form-control"
-            placeholder="descrição"
+            placeholder="Descrição do jogo"
             style="height: 200px; padding-top: 10px; padding-bottom: 10px"
             required
           ></textarea>
