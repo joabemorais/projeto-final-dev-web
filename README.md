@@ -44,7 +44,6 @@ A aplicação consiste em uma loja virtual de jogos eletrônicos em mídia digit
 
 ## :shipit: Operações implementadas para cada entidade da aplicação
 
-
 | Entidade| Criação | Leitura | Atualização | Remoção |
 | --- | --- | --- | --- | --- |
 | Usuário | X | X | X | X |
@@ -54,5 +53,17 @@ A aplicação consiste em uma loja virtual de jogos eletrônicos em mídia digit
 
 ## :neckbeard: Rotas da API REST utilizadas
 
-| GET | ? * |
-| POST | ? |
+| Método HTTP | URL |
+| --- | --- |
+| GET | api/ |
+| POST | api/ |
+| PUT |  api/ |
+| DELETE | api/ |
+| GET | api/ |
+| POST | api/auth/local/register |
+| PUT |  api/users/id |
+| DELETE| api/ |
+| GET | api/ |
+| POST | api/ |
+| PUT | api/ |
+| DELETE | api/ |
