@@ -107,7 +107,7 @@ async function authenticate() {
             required
           />
         </div>
-        <button type="submit" class="btn btn-primary mt-2">Enviar</button>
+        <button type="submit" class="btn btn-primary mt-2">Entrar</button>
       </form>
       <p class="mt-5 mb-3 text-body-secondary">© 2024-2024</p>
     </div>
