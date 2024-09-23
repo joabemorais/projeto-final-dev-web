@@ -10,8 +10,8 @@ A aplicação consiste em uma loja virtual de jogos eletrônicos em mídia digit
 ## :people_holding_hands: Papéis ou tipos de usuário da aplicação
 
 - Visitante (Usuário não registrado)
-- Cliente
-- Administrador
+- Cliente (Authenticated)
+- Administrador (Admin)
 
 ## :spiral_calendar: Entidades ou tabelas do sistema
 
@@ -22,9 +22,9 @@ A aplicação consiste em uma loja virtual de jogos eletrônicos em mídia digit
 
 ## :triangular_flag_on_post:	 Principais funcionalidades da aplicação
 
-- O Visitante poderá visualizar jogos e adicioná-los ao carrinho. Porém, para finalizar a compra e fazer avaliações, é necessário realizar o login/cadastro.
+- O Visitante poderá apenas visualizar jogos e suas avaliações.
 
-- O Cliente poderá visualizar jogos, adicionar ao carrinho, finalizar a compra, avaliar jogos e manter seus jogos adquiridos.
+- O Cliente poderá visualizar jogos, avaliações, adicionar ao carrinho, finalizar a compra, avaliar jogos e manter seus jogos adquiridos. Este também poderá atualizar ou deletar seu perfil.
 
 - O Administrador poderá visualizar, adicionar, remover e editar jogos. Além disso, também contará com as mesmas funcionalidades de um usuário autenticado padrão.
 
@@ -75,3 +75,30 @@ A aplicação consiste em uma loja virtual de jogos eletrônicos em mídia digit
 | POST | api/avaliacaos |
 | DELETE | api/avaliacaos/id |
 | PUT | api/avaliacaos/id |
+
+## Contas para acessar o sistema
+
+### Admin
+- Email: admin@mail.com
+- Senha: admin123456
+
+### Usuários Cliente
+
+#### Iarley
+
+- Email: iarley@mail.com
+- Senha: 123456
+
+#### Joabe
+
+- Email: joabe@mail.com
+- Senha: 123456
+
+***Se desejar, pode registrar sua própria conta***
+
+## Login Strapi
+
+Email e senha para logar no strapi (se necessário):
+
+- Email: souzaiarley20@gmail.com
+- Senha: Iarley080104
