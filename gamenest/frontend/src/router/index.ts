@@ -8,6 +8,7 @@ import Cart from '@/pages/Cart.vue'
 import GamesAdmin from '@/pages/Admin/GamesAdmin.vue'
 import GameForm from '@/pages/Admin/GameForm.vue'
 import RegisterPage from '@/pages/RegisterPage.vue'
+import ProfilePage from '@/pages/ProfilePage.vue'
 import Library from '@/pages/Library.vue'
 import NotFound from '@/pages/NotFound.vue'
 
@@ -19,17 +20,18 @@ const router = createRouter({
       name: 'home',
       component: PublicHome
     },
+
     {
       path: '/login',
       name: 'loginPage',
       component: LoginPage
     },
-
     {
       path: '/register',
       name: 'registerPage',
       component: RegisterPage
     },
+
     {
       path: '/admin',
       name: 'adminGamesPage',
@@ -70,6 +72,13 @@ const router = createRouter({
       }
     },
     {
+      path: '/profile',
+      name: 'profilePage',
+      component: ProfilePage,
+      meta: {
+        requiresAuth: true
+      }
+
       path: '/library',
       name: 'libraryPage',
       component: Library, 
