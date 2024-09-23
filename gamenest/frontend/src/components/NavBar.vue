@@ -49,9 +49,11 @@ function logout() {
                 <a class="dropdown-item" href="#"><i class="bi bi-cart2"></i> Carrinho</a>
               </li>
             </router-link>
-            <li>
-              <a class="dropdown-item" href="#"><i class="bi bi-collection"></i> Biblioteca</a>
-            </li>
+            <router-link :to="'/library'">
+              <li>
+                <a class="dropdown-item" href="#"><i class="bi bi-collection"></i> Biblioteca</a>
+              </li>
+            </router-link>
             <router-link :to="'/admin'">
               <li v-if="userStore.role == 'Admin'">
                 <a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Admin</a>

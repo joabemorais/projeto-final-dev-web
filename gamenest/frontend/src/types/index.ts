@@ -5,8 +5,6 @@ export type Game = {
   Desenvolvedora: string
   Preco: number
   Capa: Cover
-  ratings: Rating[]
-  users_permissions_user: User
 }
 
 type Cover = {

@@ -9,6 +9,8 @@ import GamesAdmin from '@/pages/Admin/GamesAdmin.vue'
 import GameForm from '@/pages/Admin/GameForm.vue'
 import RegisterPage from '@/pages/RegisterPage.vue'
 import ProfilePage from '@/pages/ProfilePage.vue'
+import Library from '@/pages/Library.vue'
+import NotFound from '@/pages/NotFound.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -76,6 +78,18 @@ const router = createRouter({
       meta: {
         requiresAuth: true
       }
+
+      path: '/library',
+      name: 'libraryPage',
+      component: Library, 
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'notFound',
+      component: NotFound
     }
   ]
 })

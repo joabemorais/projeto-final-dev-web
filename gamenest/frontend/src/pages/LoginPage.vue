@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useRoute } from 'vue-router';
+import { useRoute } from 'vue-router'
 import { api } from '@/api'
 import { useUserStore } from '@/stores/userStore'
 import { isAxiosError } from 'axios'
@@ -13,11 +13,11 @@ const password = ref('')
 const loading = ref(false)
 const exception = ref<ApplicationError>()
 const router = useRouter()
-const route = useRoute();
+const route = useRoute()
 
 const userStore = useUserStore()
 
-let message = route.query.message || '';
+let message = route.query.message || ''
 
 async function authenticate() {
   try {
@@ -65,7 +65,6 @@ async function authenticate() {
     loading.value = false
   }
 }
-
 </script>
 
 <template>
@@ -73,14 +72,16 @@ async function authenticate() {
 
   <div class="caixa-login">
     <div class="container col col-md-6 col-xl-3">
-      <h1 class="mb-4">GameNest</h1>
+      <router-link :to="'/'" class="no-link-style">
+        <h1 class="mb-4">GameNest</h1>
+      </router-link>
       <form @submit.prevent="authenticate" class="border p-3 rounded my-3">
         <h4>Entrar</h4>
         <div v-if="message">
-        <div class="alert alert-success" role="alert">
-          {{ message }}
+          <div class="alert alert-success" role="alert">
+            {{ message }}
+          </div>
         </div>
-      </div>
         <div v-if="exception" class="alert alert-danger" role="alert">
           {{ exception.error.message }}
         </div>
@@ -114,6 +115,13 @@ async function authenticate() {
 </template>
 
 <style scoped>
+.no-link-style {
+  text-decoration: none;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
+
 .fill {
   height: 71px;
 }

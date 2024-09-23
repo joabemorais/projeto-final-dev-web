@@ -6,13 +6,12 @@ import type { ApplicationError, Rating } from '@/types'
 import { isApplicationError } from '@/composables/useApplicationError'
 import { useUserStore } from '@/stores/userStore'
 import { defineEmits } from 'vue'
+import { useRouter } from 'vue-router'
 
 const props = defineProps<{
   gameId: number
   userId: number
 }>()
-
-const emit = defineEmits(['ratingCreated'])
 
 const corpo = ref('')
 const feedback = ref<boolean | null>(null)
@@ -20,12 +19,22 @@ const error = ref<ApplicationError | null>(null)
 const loading = ref(false)
 const rating = ref<Rating | null>(null)
 const userStore = useUserStore()
+const router = useRouter()
+
+const emit = defineEmits(['new-rating'])
 
 function setFeedback(value: boolean) {
   feedback.value = feedback.value === value ? null : value
 }
 
 async function submitRating() {
+  if (!userStore.isAuthenticated) {
+    router.push({
+      path: '/login',
+      query: { message: 'Você precisa estar autenticado para avaliar um jogo.' }
+    })
+  }
+
   try {
     loading.value = true
 
@@ -48,7 +57,15 @@ async function submitRating() {
     feedback.value = null
     rating.value = data.data
 
-    emit('ratingCreated')
+    const ratingData = {
+      ...data.data,
+      users_permissions_user: {
+        id: userStore.user.id,
+        username: userStore.user.username
+      }
+    }
+
+    emit('new-rating', ratingData)
   } catch (e) {
     if (isAxiosError(e) && isApplicationError(e.response?.data)) {
       error.value = e.response?.data

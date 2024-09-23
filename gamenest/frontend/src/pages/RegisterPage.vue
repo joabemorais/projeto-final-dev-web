@@ -56,7 +56,9 @@ async function register() {
 
   <div class="caixa-login my-5">
     <div class="container col col-md-6 col-xl-3">
-      <h1 class="mb-4">GameNest</h1>
+      <router-link :to="'/'" class="no-link-style">
+        <h1 class="mb-4">GameNest</h1>
+      </router-link>
       <form class="border p-3 rounded my-3" @submit.prevent="register">
         <div
           v-if="feedback"
@@ -101,6 +103,13 @@ async function register() {
 </template>
 
 <style scoped>
+.no-link-style {
+  text-decoration: none;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
+
 .fill {
   height: 71px;
 }
