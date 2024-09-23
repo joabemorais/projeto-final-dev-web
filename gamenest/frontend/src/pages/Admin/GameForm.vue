@@ -27,7 +27,7 @@ const router = useRouter()
 
 onMounted(() => {
   id.value = route.params.id ? Number(route.params.id) : null
-  // console.log('ID:', id.value) // Debugging statement to check the value of id
+
   if (id.value) {
     getGame()
   }
@@ -83,7 +83,6 @@ async function createGame() {
       }
     })
 
-    console.log(data.data)
     feedback.value = 'Jogo criado com sucesso.'
   } catch (e) {
     if (isAxiosError(e) && isApplicationError(e.response?.data)) {
@@ -119,7 +118,6 @@ async function updateGame() {
         }
       })
 
-      console.log(data.data)
     } else {
       const { data } = await api.put(
         `/jogos/${id.value}`,

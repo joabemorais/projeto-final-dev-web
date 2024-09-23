@@ -37,7 +37,6 @@ async function register() {
     }
 
     const { data } = await api.post('/auth/local/register', newUser)
-    console.log(data)
 
     feedback.value = 'Registrado com sucesso!'
 
