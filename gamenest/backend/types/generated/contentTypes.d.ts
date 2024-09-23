@@ -460,11 +460,6 @@ export interface ApiJogoJogo extends Schema.CollectionType {
     Descricao: Attribute.String;
     Preco: Attribute.Float & Attribute.Required;
     Desenvolvedora: Attribute.String & Attribute.Required;
-    avaliacoes: Attribute.Relation<
-      'api::jogo.jogo',
-      'oneToMany',
-      'api::avaliacao.avaliacao'
-    >;
     Capa: Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Attribute.Required;
     avaliacaos: Attribute.Relation<

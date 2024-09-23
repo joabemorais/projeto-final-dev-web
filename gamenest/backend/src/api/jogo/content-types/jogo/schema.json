@@ -28,11 +28,6 @@
       "type": "string",
       "required": true
     },
-    "avaliacoes": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::avaliacao.avaliacao"
-    },
     "Capa": {
       "type": "media",
       "multiple": false,

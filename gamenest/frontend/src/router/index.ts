@@ -78,7 +78,8 @@ const router = createRouter({
       meta: {
         requiresAuth: true
       }
-
+    },
+    {
       path: '/library',
       name: 'libraryPage',
       component: Library, 
